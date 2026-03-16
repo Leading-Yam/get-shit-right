@@ -13,7 +13,7 @@ claude install get-shit-right
 Or manually:
 
 ```bash
-git clone https://github.com/EdenTan26/get-shit-right.git
+git clone https://github.com/Leading-Yam/get-shit-right.git
 claude plugin add /path/to/get-shit-right
 ```
 
