@@ -1,31 +1,95 @@
-# GetShitRight
+<p align="center">
+  <img src="GetShitRight_image.jpg" alt="GetShitRight — Because 'Done' is just the beginning. 'Right' is the destination." width="700">
+</p>
 
-**Validate before you build.** Evidence-backed BUILD/PIVOT/KILL decisions for SaaS ideas.
+<h1 align="center">GetShitRight</h1>
 
-GetShitRight is a free, open-source Claude Code plugin that protects non-technical solo founders from building the wrong thing. It researches your market, scores your idea, and tells you honestly whether to build, pivot, or kill it.
+<p align="center">
+  <strong>Stop building things nobody wants.</strong><br>
+  Evidence-backed BUILD / PIVOT / KILL decisions for SaaS ideas.<br>
+  Free. Open source. Brutally honest.
+</p>
 
-## Install
+<p align="center">
+  <em>Inspired by <a href="https://github.com/get-shit-done">GetShitDone (GSD)</a> — which helps you build things right.<br>
+  GetShitRight makes sure you're building the <strong>right thing</strong> in the first place.</em>
+</p>
 
-```bash
-claude install get-shit-right
-```
+---
 
-Or manually:
+## The Problem
+
+If you're a non-technical solo founder in 2026, you can vibe-code a full SaaS app in a weekend. Claude Code, Cursor, Replit — the tools are incredible.
+
+Which means you can now waste a weekend building something nobody wants *faster than ever before*.
+
+Here's how most "brilliant" ideas go:
+
+1. Get excited about an idea at 2am
+2. Spend 3 weeks building it
+3. Launch to... crickets
+4. Google the idea properly for the first time
+5. Find 14 competitors who do it better
+6. Question life choices
+
+The problem was never the building. The problem is building the **wrong thing**.
+
+GetShitRight is a free Claude Code plugin that forces you to validate before you code. Think of it as a brutally honest co-founder who does the market research you keep skipping.
+
+## Quick Start
 
 ```bash
 git clone https://github.com/Leading-Yam/get-shit-right.git
 claude plugin add /path/to/get-shit-right
 ```
 
-## Quick Start
+Then:
 
 ```
 /val:quick
 ```
 
-That's it. One command, full validation pipeline. It will interview you about your idea, research the market, score viability, and deliver a BUILD/PIVOT/KILL verdict.
+One command. Full validation pipeline. No excuses.
 
-## Commands
+## What Happens When You Run It
+
+**1. It interviews you** (6 questions max — it respects your time, even if it won't respect your feelings)
+
+```
+/val:idea
+```
+
+Captures your idea, target customer, and riskiest assumptions. Don't know the answer? Say "Surprise me" and it'll make a smart assumption instead of blocking you.
+
+**2. It researches your market** with 3 parallel AI agents
+
+```
+/val:research
+```
+
+- **Pain validation** — Reddit, HN, Indie Hackers, Twitter/X
+- **Competitive landscape** — pricing, features, negative reviews
+- **Market sizing** — TAM/SAM/SOM with methodology
+
+**3. It scores your idea honestly**
+
+```
+/val:score
+```
+
+7 dimensions, each 1-5. Default-kill philosophy: you need **25+/35** to earn a BUILD. Score a 1/5 on Pain Intensity or Willingness to Pay? Automatic KILL. No appeals court.
+
+**4. It delivers a verdict**
+
+```
+/val:decide
+```
+
+**BUILD**, **PIVOT**, or **KILL** — with specific next steps for each.
+
+KILL verdicts always include alternative angles worth exploring. You're redirected, not stopped.
+
+## All Commands
 
 | Command | What It Does |
 |---------|-------------|
@@ -37,50 +101,13 @@ That's it. One command, full validation pipeline. It will interview you about yo
 | `/val:quick` | Full pipeline in one command |
 | `/val:help` | Usage guide & current progress |
 
-## How It Works
-
-### Start with an idea...
-
-```
-/val:idea
-```
-
-GetShitRight interviews you (6 questions max) to capture your idea, target customer, and riskiest assumptions. Don't know the answer? Say "Surprise me" and it'll make a smart assumption.
-
-### ...or start with a competitor
+### Start from a competitor instead
 
 ```
 /val:reverse "Calendly"
 ```
 
 Deep-dive a competitor's weaknesses and find underserved angles. Pick a spin-off direction and validate it.
-
-### Research the market
-
-```
-/val:research
-```
-
-Three parallel agents research your idea:
-- **Pain validation** — Reddit, HN, Indie Hackers, Twitter/X
-- **Competitive landscape** — pricing, features, negative reviews
-- **Market sizing** — TAM/SAM/SOM with methodology
-
-### Get scored (honestly)
-
-```
-/val:score
-```
-
-7 dimensions, each 1-5. Default-kill philosophy: you need 25+/35 to get a BUILD verdict. A single 1/5 on Pain Intensity or Willingness to Pay is an automatic KILL.
-
-### Get the verdict
-
-```
-/val:decide
-```
-
-BUILD, PIVOT, or KILL — with specific next steps for each. KILL verdicts always include alternative angles worth exploring.
 
 ## Better Research (Optional)
 
@@ -94,20 +121,37 @@ Works without it. Better with it.
 
 ## GSD Integration
 
-If you use GetShitDone (GSD), a BUILD verdict generates `CONSTRAINTS.md` that GSD can read directly:
+Inspired by [GetShitDone (GSD)](https://github.com/get-shit-done) — the planning and execution engine for Claude Code. If you use GSD, a BUILD verdict generates `CONSTRAINTS.md` that GSD reads directly:
 
 ```
 /val:decide  →  .validation/CONSTRAINTS.md  →  /gsd:new-project
 ```
 
-No manual copy-paste. GSD reads your validated constraints and skips redundant questions.
+**GetShitRight validates. GetShitDone builds.** No manual copy-paste between them.
 
 ## Philosophy
 
-- **Default-kill** — BUILD is hard to earn. Most ideas should get KILL or PIVOT.
+- **Default-kill** — BUILD is hard to earn. Most ideas should get KILL or PIVOT. That's not pessimism, that's math.
 - **Evidence over opinion** — every score cites sources. No hand-wavy "this looks promising."
-- **Surprise me** — lazy founders get smart defaults, not blockers.
-- **Always an alternative** — KILL verdicts include spin-off angles. You're redirected, not stopped.
+- **Surprise me** — don't know the answer? Say so. You get smart defaults, not blockers.
+- **Always an alternative** — KILL verdicts include spin-off angles. The idea dies, not your ambition.
+
+## Who This Is For
+
+- Solo founders who are tired of building first and asking questions never
+- Non-technical vibe-coders who can now ship fast (maybe too fast)
+- Anyone who's ever said "I'll validate later" and never did
+
+## Who This Is NOT For
+
+- People who enjoy spending 3 months on ideas that could've been killed in 3 minutes
+- Your ego
+
+---
+
+<p align="center">
+  <em>Because 'Done' is just the beginning. 'Right' is the destination.</em>
+</p>
 
 ## License
 
