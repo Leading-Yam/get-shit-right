@@ -36,11 +36,11 @@ The problem was never the building. The problem is building the **wrong thing**.
 
 GetShitRight is a free Claude Code plugin that forces you to validate before you code. Think of it as a brutally honest co-founder who does the market research you keep skipping.
 
-## Quick Start
+## Install
 
 ```bash
-git clone https://github.com/Leading-Yam/get-shit-right.git
-claude plugin add /path/to/get-shit-right
+claude plugin marketplace add https://github.com/Leading-Yam/get-shit-right
+claude plugin install get-shit-right@get-shit-right
 ```
 
 Then:
