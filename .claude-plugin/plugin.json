@@ -1,0 +1,12 @@
+{
+  "name": "get-shit-right",
+  "version": "0.1.0",
+  "description": "Validate SaaS ideas before code is written. Evidence-backed BUILD/PIVOT/KILL decisions with default-kill philosophy.",
+  "author": {
+    "name": "Eden Tan",
+    "url": "https://github.com/Leading-Yam"
+  },
+  "repository": "https://github.com/Leading-Yam/get-shit-right",
+  "license": "MIT",
+  "keywords": ["validation", "saas", "ideas", "solo-founder"]
+}
