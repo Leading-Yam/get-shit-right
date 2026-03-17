@@ -56,30 +56,57 @@ Spawn 3 agents concurrently:
 
 Wait for all 3 agents to complete.
 
-## Step 4: Merge Research Results
+## Step 4: Smart Merge
 
-Read the temporary files written by the parallel agents:
-- `.validation/RESEARCH-PAIN.md` → extract Pain Validation section and gaps
-- `.validation/RESEARCH-MARKET.md` → extract Market Size section and gaps
+Read the outputs from the parallel agents. Before reading each file, check if it exists. If an agent's output file is missing, log a warning and continue with available data.
 
-Combine into `.validation/RESEARCH.md`:
-- Pain Validation section (from RESEARCH-PAIN.md)
-- Market Size section (from RESEARCH-MARKET.md)
-- Research Gaps section (merged from both agents' gap lists)
+**Input files:**
+- `.validation/RESEARCH-PAIN.md` (from gsr-researcher)
+- `.validation/RESEARCH-MARKET.md` (from gsr-market-sizer)
+- `.validation/COMPETITORS.md` `## Scoring Input` section (from gsr-competitor-analyst)
 
+**Merge operations (perform as explicit reasoning steps):**
+
+### 4a: Deduplication
+Scan all agent outputs for overlapping URLs (literal string matching). When the same URL appears in multiple agent outputs:
+- Consolidate into a single reference
+- Note: "Found independently by [agent 1] and [agent 2]" — this is a positive signal
+
+### 4b: Cross-Referencing
+Compare assessments across agents for the same scoring dimensions:
+- Pain researcher's willingness-to-pay signals vs competitor analyst's pricing gap findings
+- Pain researcher's timing signals vs market sizer's timing signals
+- Flag any disagreements for the Contradictions section
+
+### 4c: Assemble RESEARCH.md
+Combine into `.validation/RESEARCH.md` following the template structure:
+1. Pain Validation (from RESEARCH-PAIN.md)
+2. Market Size (from RESEARCH-MARKET.md)
+3. Estimated Maintenance Cost (from RESEARCH-MARKET.md)
+4. Scoring Inputs (consolidated from all agents — side-by-side when two agents assess the same dimension)
+5. Converging Signals (findings supported by 2+ agents)
+6. Contradictions (disagreements between agents with both sides cited)
+7. Research Coverage (merged coverage tables from all agents)
+8. Research Gaps & Recommended Actions (merged from all agents, each gap linked to a scoring dimension with a suggested founder action)
+
+If any agent's output was missing, add at the top: "⚠️ Incomplete research — [agent name] failed to produce results."
+
+### 4d: Cleanup
 Delete the temporary files:
 - `.validation/RESEARCH-PAIN.md`
 - `.validation/RESEARCH-MARKET.md`
 
 Ensure `.validation/COMPETITORS.md` is complete.
 
-## Step 5: Research Quality Assessment
+## Step 5: Research Quality Summary
 
-Read the merged `.validation/RESEARCH.md` and assess overall quality:
+Read the merged `.validation/RESEARCH.md` and report:
+- Total verified sources across all agents
+- Number of research gaps identified
+- Number of contradictions found between agents
+- Any agents that failed to produce output
 
-- If Pain Validation confidence is Low AND Market Size confidence is Low:
-  Display: "Research signals are weak across the board. Consider validating manually before trusting the scorecard."
-- Otherwise: display a brief summary of research quality
+Display: "Research complete. [X verified sources, Y gaps, Z contradictions found]"
 
 ## Step 6: Update State
 
