@@ -5,6 +5,21 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-03-17
+
+### Added
+- Firecrawl probe gate for reverse workflow
+- Progress status messages during research workflow
+- Structured scraping targets for deep competitor analysis (7 mandatory sources)
+- Evidence-backed spin-off angles with source URLs and engagement counts
+- Moat check per angle — assesses how hard competitor can replicate
+- Angle confidence scoring (1-5 composite: evidence + segment + moat)
+
+### Changed
+- REVERSE-ANALYSIS.md template includes evidence, moat, and confidence fields
+- "Surprise me" in reverse workflow now picks highest confidence score (replaces heuristic)
+- Angles ranked by confidence in presentation
+
 ## [0.2.1] - 2026-03-17
 
 ### Added
