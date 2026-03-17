@@ -33,6 +33,8 @@ Then re-run /val:research."
 
 **If the call succeeds:** proceed to Step 3.
 
+Display: "Firecrawl verified. Spawning 3 research agents..."
+
 ## Step 3: Spawn Parallel Research Agents
 
 Read `.validation/IDEA.md` to prepare context for all agents.
@@ -57,6 +59,9 @@ Spawn 3 agents concurrently:
 Wait for all 3 agents to complete.
 
 ## Step 4: Smart Merge
+
+Display: "All agents complete. Pain researcher: X sources. Competitor analyst: Y sources. Market sizer: Z sources. Merging and cross-referencing results..."
+(Read each agent's output file to count sources before displaying.)
 
 Read the outputs from the parallel agents. Before reading each file, check if it exists. If an agent's output file is missing, log a warning and continue with available data.
 
