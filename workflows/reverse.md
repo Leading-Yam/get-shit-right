@@ -71,6 +71,7 @@ Convert the chosen angle into IDEA.md format:
 - Riskiest Assumptions: derived from the gap and segment
 - Switching Trigger: from competitor's weakness
 - Pricing Intuition: "To be determined from competitive research" (unless obvious from competitor pricing)
+- Monthly Runway Budget: "To be estimated from research"
 - Stated Assumptions: note that this idea was generated from reverse analysis
 
 Write to `.validation/IDEA.md`.
