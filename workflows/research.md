@@ -16,20 +16,22 @@ Check for `.validation/IDEA.md`:
 
 Check for existing research artifacts (overwrite protection).
 
-## Step 2: Firecrawl Nudge
+## Step 2: Firecrawl Probe Gate
 
-Read `.validation/STATE.md` config section.
+Make a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-If `firecrawl_nudge_shown` is `false`:
-- Check if Firecrawl MCP is available (agents will detect via try-and-fallback)
-- Display once: "Tip: Install the Firecrawl MCP plugin for deeper research results. GetShitRight works without it, but competitor reviews and Reddit threads are more reliably scraped with it. Run `claude mcp add firecrawl` to set it up."
-- Update STATE.md: set `firecrawl_nudge_shown: true`
+**If the call fails** (tool not found, connection error, any error):
+Abort the workflow with:
+"Firecrawl plugin required for research.
 
-## Step 2b: Web Search Availability
+GetShitRight uses Firecrawl for reliable web scraping — without it, research results may contain hallucinated sources and unverifiable claims.
 
-If all search tool calls fail during agent execution (no WebSearch, no WebFetch, no Firecrawl),
-abort the research workflow with: "Web search unavailable. Research requires internet access.
-Run `/val:research` when connected."
+Install it free from the Plugin Marketplace:
+  /plugin → select firecrawl → /reload-plugins
+
+Then re-run /val:research."
+
+**If the call succeeds:** proceed to Step 3.
 
 ## Step 3: Spawn Parallel Research Agents
 

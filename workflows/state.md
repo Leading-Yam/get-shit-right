@@ -19,7 +19,7 @@ Read `.validation/STATE.md` and parse:
 - `Current Status` — NOT_STARTED / IN_PROGRESS / COMPLETE
 - `Steps` — which steps are checked (completed) with dates
 - `Entry Point` — idea / reverse / pending
-- `Config` — key-value pairs (firecrawl_nudge_shown, etc.)
+- `Config` — key-value pairs (reserved for future use)
 
 ## Updating State
 

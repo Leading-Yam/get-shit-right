@@ -13,4 +13,3 @@
 ## Entry Point: pending
 
 ## Config
-- firecrawl_nudge_shown: false
