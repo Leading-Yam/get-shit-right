@@ -87,6 +87,11 @@ workflow will merge this into the final RESEARCH.md).
 
 Include:
 - Market Size section (following RESEARCH.md template)
+- Estimated Maintenance Cost section:
+  - Tech Stack Estimate: Hosting, Database, Third-party APIs, Domain + DNS — each with $X-Y/mo range and reasoning
+  - Total range with confidence level
+  - Budget Check: compare against founder's Monthly Runway Budget from IDEA.md
+  - Status: "Budget covers estimated range" / "Budget is tight" / "Budget insufficient"
 - Research Gaps section with your specific data gaps
 - Scoring Input section with assessments for:
   - Market Size (1-5): evidence suggests X, reasoning, top 3 sources

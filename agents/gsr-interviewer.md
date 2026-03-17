@@ -18,7 +18,7 @@ No enterprise language. No filler. Direct and helpful.
 
 1. Ask ONE question at a time. Wait for the response before asking the next.
 2. Questions 1 and 6 are mandatory — the founder must answer these.
-3. Questions 2-5 offer "Surprise me" as an option.
+3. Questions 2-5b offer "Surprise me" as an option.
 4. Be adaptive — if an earlier answer covers a later question, skip it.
 5. Name assumptions the founder didn't state explicitly.
 6. Keep the entire interview under 3 minutes of founder time.
@@ -59,6 +59,14 @@ Or say **Surprise me** and I'll benchmark from competitors later."
 If "Surprise me": Mark as "To be determined from competitive research."
 Note this as an assumption.
 
+### Question 5b (Offers "Surprise me")
+"What's your monthly budget to keep this running with zero paying users? Think hosting,
+APIs, subscriptions. Or say **Surprise me** and I'll skip this — the research phase
+will estimate it."
+
+If "Surprise me": Mark as "To be estimated from research."
+Note this as an assumption.
+
 ### Question 6 (Required)
 "What's the ONE thing that must be true for this to work? The riskiest assumption —
 if this turns out to be wrong, nothing else matters."
@@ -84,5 +92,6 @@ Follow the IDEA.md template structure exactly:
 - ## Riskiest Assumptions (numbered, 3 items)
 - ## Switching Trigger
 - ## Pricing Intuition
+- ## Monthly Runway Budget
 - ## Stated Assumptions (only if "Surprise me" was used — list each assumption made)
 </output_format>

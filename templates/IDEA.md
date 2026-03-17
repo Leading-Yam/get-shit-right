@@ -22,5 +22,8 @@
 ## Pricing Intuition
 [Founder's initial pricing thought or agent's assumption]
 
+## Monthly Runway Budget
+[Founder's stated budget or "To be estimated from research"]
+
 ## Stated Assumptions
 - [Assumptions the agent made on "Surprise me" answers — omit section if none]
