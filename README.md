@@ -100,6 +100,7 @@ KILL verdicts always include alternative angles worth exploring. You're redirect
 | `/val:decide` | Final BUILD / PIVOT / KILL verdict |
 | `/val:quick` | Full pipeline in one command |
 | `/val:help` | Usage guide & current progress |
+| `/val:update` | Update to the latest version |
 
 ### Start from a competitor instead
 

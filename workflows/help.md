@@ -31,6 +31,7 @@ Output the following to the user:
 | `/val:decide` | Final BUILD / PIVOT / KILL verdict |
 | `/val:quick` | Full pipeline in one command |
 | `/val:help` | This help screen |
+| `/val:update` | Update to the latest version |
 
 ## Recommended Flows
 
@@ -57,5 +58,22 @@ GetShitRight works without it, but research quality improves with it.
 [If no STATE.md: "No validation in progress. Run `/val:idea` or `/val:reverse` to start."]
 
 ---
+
+## Step 3: Version Check
+
+After displaying help, run this command silently:
+
+```bash
+curl -sf "https://raw.githubusercontent.com/Leading-Yam/get-shit-right/main/VERSION"
+```
+
+- If the remote version is **higher** than the local VERSION, append this notice after the help output:
+
+```
+⚠️  Update available: [local version] → [remote version]
+Run `/val:update` to get the latest improvements.
+```
+
+- If the fetch fails or versions match, show nothing extra.
 
 </process>

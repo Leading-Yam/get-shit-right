@@ -4,6 +4,7 @@ description: Show available commands, recommended flows, and current validation 
 allowed-tools:
   - Read
   - Glob
+  - Bash
 ---
 
 <objective>
