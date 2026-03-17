@@ -7,8 +7,6 @@ allowed-tools:
   - Write
   - Bash
   - Glob
-  - WebSearch
-  - WebFetch
   - AskUserQuestion
   - Agent
   - mcp__firecrawl__*
