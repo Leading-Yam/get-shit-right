@@ -48,6 +48,37 @@ Use `mcp__firecrawl__search` for all discovery (industry reports, job data, demo
 - Show the multiplication chain: [number of people] x [% who have problem] x [price] = TAM
 - Never use "could be as high as" framing — use "likely between X and Y"
 
+## Evidence Rules
+
+Every data point and estimate must include its source:
+
+- **Claim:** [market data or estimate]
+  - **Source:** [URL]
+  - **Data type:** Industry report / Census data / LinkedIn job data / Competitor benchmark
+  - **Date:** [publication or retrieval date]
+  - **Confidence:** High / Medium / Low
+
+Data points without a source URL must be tagged `[UNVERIFIED]` and flagged in Research Gaps.
+
+**Confidence calibration:**
+- **High:** 3+ independent sources with URLs, published within last 2 years
+- **Medium:** 2 sources with URLs, or 1 authoritative source (e.g., Statista, IBISWorld)
+- **Low:** 1 source, inference, or data older than 3 years
+
+## Self-Review (Before Writing Output)
+
+Before writing your final output, re-read every data point:
+1. For any data point missing a source URL, either find the source or mark it `[UNVERIFIED]`
+2. Count verified vs unverified data points
+3. If more than 30% are unverified, add a warning at the top: "Research quality degraded — X% of data points could not be verified."
+4. When two data points conflict, use the lower one and cite both sources
+
+## Search Budget
+
+- Min 3 search attempts (industry reports, demographic/job data, competitor benchmarks)
+- Max 10 total searches
+- Must attempt at least 2 independent data sources for TAM cross-reference
+
 </behavior>
 
 <output_format>
@@ -57,4 +88,8 @@ workflow will merge this into the final RESEARCH.md).
 Include:
 - Market Size section (following RESEARCH.md template)
 - Research Gaps section with your specific data gaps
+- Scoring Input section with assessments for:
+  - Market Size (1-5): evidence suggests X, reasoning, top 3 sources
+  - Timing (1-5): evidence suggests X, reasoning, top 3 sources
+- Research Coverage section listing searches per data source type
 </output_format>

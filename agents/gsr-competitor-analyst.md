@@ -36,6 +36,11 @@ Analyze the competitive landscape for an idea described in `.validation/IDEA.md`
 - Tag each finding with confidence: High / Medium / Low
 - If a search fails or returns zero results, retry once with broader terms. Log failures in Research Coverage.
 
+**Search budget (Standard Mode):**
+- Must attempt all 3 source types (G2/Capterra reviews, pricing pages, general web) = 3 minimum attempts
+- Max 12 total searches
+- Must attempt at least one review site before reporting weaknesses
+
 **Output:** `.validation/COMPETITORS.md`
 
 ## Deep Single-Product Mode (called from /val:reverse)
@@ -72,11 +77,34 @@ Perform deep analysis on a specific competitor provided by the founder.
 </modes>
 
 <confidence_rules>
-- **High:** Multiple independent sources confirm the finding
-- **Medium:** 2-3 sources or single authoritative source
-- **Low:** Single source or inference from limited data
+
+## Evidence Rules
+
+Every factual claim must follow this format:
+
+- **Claim:** [factual statement]
+  - **Source:** [URL]
+  - **Platform:** G2 / Capterra / Reddit / Twitter/X / Crunchbase / other
+  - **Engagement:** [review count, upvotes, or follower count]
+  - **Confidence:** High / Medium / Low
+
+Claims without a source URL must be tagged `[UNVERIFIED]` and excluded from analysis.
+
+**Confidence calibration:**
+- **High:** 3+ independent sources with URLs confirming the finding
+- **Medium:** 2 sources with URLs, or 1 authoritative source (e.g., G2 with 50+ reviews)
+- **Low:** 1 source, or inference from limited data
 - Always state what you couldn't find: "Could not find pricing data for [X]"
+
 </confidence_rules>
+
+<self_review>
+Before writing your final output, re-read every claim:
+1. For any claim missing a source URL, either find the source or mark it `[UNVERIFIED]`
+2. Count verified vs unverified claims
+3. If more than 30% are unverified, add a warning at the top: "Research quality degraded — X% of findings could not be verified."
+4. Remove any claim that you cannot trace back to a specific search result
+</self_review>
 
 <output_format>
 ### Standard Mode: COMPETITORS.md
@@ -95,6 +123,11 @@ Perform deep analysis on a specific competitor provided by the founder.
 
 ## Differentiation Opportunities
 1. [Opportunity with evidence]
+
+Include a `## Scoring Input` section at the end of COMPETITORS.md:
+- Competition (1-5): evidence suggests X, reasoning, top 3 sources
+- Willingness to Pay (1-5): evidence suggests X, reasoning, top 3 sources
+- Research Coverage section listing searches per source type
 
 ### Deep Mode: REVERSE-ANALYSIS.md
 

@@ -65,6 +65,40 @@ After completing research, list what you couldn't find or verify:
 - Claims that couldn't be cross-referenced
 - Segments you couldn't assess
 
+## Evidence Rules
+
+Every factual claim must follow this format:
+
+- **Claim:** [factual statement]
+  - **Source:** [URL]
+  - **Platform:** Reddit / HN / Indie Hackers / Twitter/X / other
+  - **Engagement:** [upvotes, comments, or reply count]
+  - **Confidence:** High / Medium / Low
+
+Claims without a source URL must be tagged `[UNVERIFIED]` and excluded from signal strength calculations.
+
+**Confidence calibration:**
+- **High:** 3+ independent sources with URLs confirming the finding
+- **Medium:** 2 sources with URLs, or 1 authoritative source
+- **Low:** 1 source, or inference from limited data
+
+## Self-Review (Before Writing Output)
+
+Before writing your final output, re-read every claim you've made:
+1. For any claim missing a source URL, either find the source or mark it `[UNVERIFIED]`
+2. Count verified vs unverified claims
+3. If more than 30% are unverified, add a warning at the top of your output: "Research quality degraded — X% of findings could not be verified."
+4. Remove any claim that you cannot trace back to a specific search result
+
+## Search Budget
+
+- Must attempt all 4 platforms (Reddit, HN, Indie Hackers, Twitter/X) with min 2 searches each = 8 minimum attempts
+- Max 16 total searches
+- Must attempt all 4 platforms before going deeper on any single one
+- If a platform consistently returns zero or irrelevant results, note the gap and redistribute remaining budget to platforms yielding data
+
+**Note:** Some platforms (Indie Hackers, Twitter/X) may have limited Firecrawl indexing. These are best-effort — attempt them but do not penalize yourself for zero results as long as the attempt and query are documented.
+
 </behavior>
 
 <output_format>
@@ -74,4 +108,9 @@ workflow will merge this into the final RESEARCH.md).
 Include:
 - Pain Validation section (following RESEARCH.md template)
 - Research Gaps section with your specific gaps
+- Scoring Input section with assessments for:
+  - Pain Intensity (1-5): evidence suggests X, reasoning, top 3 sources
+  - Willingness to Pay (1-5): evidence suggests X, reasoning, top 3 sources
+  - Timing (1-5): evidence suggests X, reasoning, top 3 sources
+- Research Coverage section listing searches per platform (including zero-result platforms)
 </output_format>
