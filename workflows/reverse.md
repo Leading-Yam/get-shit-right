@@ -45,25 +45,22 @@ Agent writes `.validation/REVERSE-ANALYSIS.md`.
 
 ## Step 4: Present Angles
 
-Read `.validation/REVERSE-ANALYSIS.md` and present the spin-off angles to the founder.
+Read `.validation/REVERSE-ANALYSIS.md` and present the spin-off angles ranked by confidence score:
 
-"Based on my analysis of [Competitor], here are 3 spin-off angles:
+"Based on my analysis of [Competitor], here are 3 spin-off angles (ranked by confidence):
 
-**Angle 1: [Name]** — [Hook]
-**Angle 2: [Name]** — [Hook]
-**Angle 3: [Name]** — [Hook]
+**Angle 1: [Name]** — [Hook] (Confidence: X/5)
+**Angle 2: [Name]** — [Hook] (Confidence: X/5)
+**Angle 3: [Name]** — [Hook] (Confidence: X/5 ⚠️ speculative if ≤2)
 
 Pick one (1/2/3) or say **Surprise me** and I'll pick the strongest angle."
 
 ## Step 5: Select Angle
 
 If founder picks a number: use that angle.
-If founder says "Surprise me": pick the angle with the strongest combination of:
-1. Largest underserved segment
-2. Weakest existing competition
-3. Clearest differentiation hook
+If founder says "Surprise me": pick the angle with the highest confidence score.
 
-State why: "I picked Angle [N] because [reasoning]."
+State why: "I picked Angle [N] because it has the highest confidence score (X/5), backed by [brief evidence summary]."
 
 ## Step 6: Generate IDEA.md
 
