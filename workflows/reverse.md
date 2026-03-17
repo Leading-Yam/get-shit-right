@@ -11,6 +11,23 @@ Follow @workflows/state.md to ensure `.validation/STATE.md` exists.
 Check for existing completed validation (multi-idea guard).
 Check for existing IDEA.md (overwrite protection).
 
+## Step 1b: Firecrawl Probe Gate
+
+Make a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
+
+**If the call fails** (tool not found, connection error, any error):
+Abort the workflow with:
+"Firecrawl plugin required for reverse analysis.
+
+GetShitRight uses Firecrawl for reliable web scraping — without it, competitor research may contain hallucinated sources and unverifiable claims.
+
+Install it free from the Plugin Marketplace:
+  /plugin → select firecrawl → /reload-plugins
+
+Then re-run /val:reverse."
+
+**If the call succeeds:** proceed to Step 2.
+
 ## Step 2: Parse Competitor Input
 
 Read $ARGUMENTS for the competitor name, URL, or app store link.
