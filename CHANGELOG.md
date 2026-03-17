@@ -5,6 +5,22 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-03-17
+
+### Added
+- Structured evidence format — every claim requires source URL, platform, engagement, and confidence
+- Agent self-review step — flags unverified claims before writing output
+- Search budget constraints — minimum platform coverage, maximum search limits per agent
+- Scoring input sections — research output aligned to 7 scoring dimensions
+- Smart merge — deduplication, cross-referencing, contradiction detection, signal reinforcement
+- Actionable research gaps — each gap linked to scoring dimension with suggested founder action
+- Estimated maintenance cost — tech stack cost range + budget check from founder interview
+- Monthly Runway Budget question in idea interview
+
+### Changed
+- RESEARCH.md template restructured with new sections: Scoring Inputs, Converging Signals, Contradictions, Research Coverage, Research Gaps
+- IDEA.md template includes Monthly Runway Budget field
+
 ## [0.2.0] - 2026-03-17
 
 ### Added
