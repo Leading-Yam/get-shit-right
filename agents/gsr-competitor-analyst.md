@@ -47,11 +47,15 @@ Analyze the competitive landscape for an idea described in `.validation/IDEA.md`
 
 Perform deep analysis on a specific competitor provided by the founder.
 
-1. Research the product thoroughly:
-   - Full feature map
-   - All pricing tiers with details
-   - User count / revenue estimates
-   - Technology stack (if visible)
+1. Research the product using this mandatory scraping checklist:
+   - Product website — homepage + pricing page (`mcp__firecrawl__scrape`)
+   - G2 reviews — "[competitor] reviews site:g2.com" (`mcp__firecrawl__search`)
+   - Capterra reviews — "[competitor] reviews site:capterra.com" (`mcp__firecrawl__search`)
+   - Reddit discussions — "[competitor] site:reddit.com" (`mcp__firecrawl__search`)
+   - Crunchbase — "[competitor] crunchbase" for funding/employee data (`mcp__firecrawl__search`)
+   - LinkedIn — "[competitor] LinkedIn" for employee count signal (`mcp__firecrawl__search`)
+   - Twitter/X — "[competitor] complaints OR alternative OR switching" (`mcp__firecrawl__search`)
+   Must attempt all 7 targets. Report which succeeded and which returned no results.
 2. Mine reviews extensively:
    - Positive review themes (what keeps users)
    - Negative review themes (what frustrates users)
@@ -63,8 +67,15 @@ Perform deep analysis on a specific competitor provided by the founder.
    - Who is explicitly not the target?
 4. Generate 2-3 spin-off angles, each with:
    - Target segment the competitor ignores
-   - Gap being exploited
+   - Gap being exploited (with evidence URLs)
    - One-sentence differentiation hook
+   - Evidence: cite specific review themes with URLs and engagement counts
+   - Evidence strength: Strong (3+ sources) / Moderate (2 sources) / Weak (1 or inference)
+   - Moat assessment: Easy / Medium / Hard for competitor to replicate, with reasoning
+   - Confidence score (1-5): average of Evidence strength (1-5), Segment size signal (1-5), Moat durability (1-5)
+
+   Angles with "Weak" evidence strength: flag as "This angle is speculative — validate manually before pursuing."
+   Angles with "Easy" moat: flag as "Competitor could close this gap quickly. Only pursue if you can establish lock-in before they react."
 
 **Research approach:**
 - Use `mcp__firecrawl__search` for all discovery. Use `mcp__firecrawl__scrape` for deep page content.
