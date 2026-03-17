@@ -33,6 +33,7 @@ Reverse finds openings. Skew finds leverage.
 **Step 1: Initialize State**
 - Follow `@workflows/state.md` to ensure `.validation/STATE.md` exists
 - Check for existing completed validation (multi-idea guard)
+- Check for existing `.validation/VALUE-SKEW.md` (overwrite protection)
 
 **Step 2: Determine Input Mode**
 - Check for `$ARGUMENTS` (URL)
@@ -67,9 +68,20 @@ Reverse finds openings. Skew finds leverage.
 
 ### 3. Agent — `agents/gsr-value-skewer.md`
 
-**Role:** Value strategist using MJ DeMarco's Value Array framework. Thinks in leverage, not features. Finds the axis where 10x value delivery is possible. No hype — evidence-backed analysis.
+**YAML frontmatter:**
+```yaml
+---
+name: gsr-value-skewer
+description: Analyzes value delivery using DeMarco's Value Array framework to find 10x skew opportunities.
+tools: Read, Write, mcp__firecrawl__*
+---
+```
 
-**Behavior:**
+**XML sections:** `<role>`, `<behavior>`, `<confidence_rules>`, `<self_review>`, `<output_format>`
+
+**`<role>`:** Value strategist using MJ DeMarco's Value Array framework. Thinks in leverage, not features. Finds the axis where 10x value delivery is possible. No hype — evidence-backed analysis.
+
+**`<behavior>`:**
 
 1. **Feature Extraction (URL modes):**
    - Scrape the competitor URL with `mcp__firecrawl__scrape`
@@ -104,20 +116,25 @@ Reverse finds openings. Skew finds leverage.
    - Map skew opportunities back to the founder's idea
    - Show how the idea could incorporate the highest-leverage skew
 
-**Evidence rules:** Same confidence calibration as all GSR agents:
-- High: 3+ independent sources with URLs
-- Medium: 2 sources or 1 authoritative
-- Low: 1 source or inference
-- Claims without source: tagged `[UNVERIFIED]`
+**`<confidence_rules>`:** Same calibration as all GSR agents:
+- **High:** 3+ independent sources with URLs confirming the finding
+- **Medium:** 2 sources with URLs, or 1 authoritative source
+- **Low:** 1 source, or inference from limited data
+- Claims without source URL must be tagged `[UNVERIFIED]` and excluded from analysis
+- Always state what you couldn't find
 
 **Search budget:**
 - URL mode: 1 scrape (target URL) + up to 8 supplementary searches for context
 - Idea mode: up to 8 searches for market context
 - Must attempt at least 3 searches before reporting
 
-**Self-review:** Before writing output, verify all claims have sources. If >30% unverified, add warning.
+**`<self_review>`:** Before writing final output:
+1. Re-read every claim — find source or mark `[UNVERIFIED]`
+2. Count verified vs unverified claims
+3. If >30% unverified, add warning at top
+4. Remove claims that cannot be traced to a specific search result
 
-**Output:** `.validation/VALUE-SKEW.md`
+**`<output_format>`:** `.validation/VALUE-SKEW.md` — follow template exactly.
 
 ### 4. Template — `templates/VALUE-SKEW.md`
 
@@ -181,7 +198,7 @@ Reverse finds openings. Skew finds leverage.
 
 ### 5. STATE.md Update
 
-Add optional `skew` step between `reverse` and `research`:
+Add `skew` step between `reverse` and `research` in `templates/STATE.md`:
 
 ```markdown
 ## Steps
@@ -193,7 +210,16 @@ Add optional `skew` step between `reverse` and `research`:
 - [ ] decide
 ```
 
-The `skew` step is optional — it does not block any downstream steps.
+**Optional step handling:** Both `reverse` and `skew` are optional — they do not block downstream steps and are not required for `COMPLETE` status. Update `workflows/state.md` to define which steps are required for COMPLETE:
+
+Add after the "Updating State" section:
+
+```
+Required steps for COMPLETE status: idea, research, score, decide
+Optional steps (tracked but not required): reverse, skew
+```
+
+This makes the implicit optionality of `reverse` explicit, and applies the same rule to `skew`.
 
 ## What This Doesn't Do
 
@@ -205,6 +231,22 @@ The `skew` step is optional — it does not block any downstream steps.
 
 ## Integration Points
 
-- `/val:help` should list `/val:skew` with description
+### `/val:help` updates
+
+Add to the command table (between `/val:reverse` and `/val:research`):
+
+```
+| `/val:skew` | Analyze value delivery to find 10x skew opportunities |
+```
+
+Add optional flow after the existing recommended flows:
+
+```
+**"I want to find leverage"** (Optional, use alongside any flow)
+`/val:skew` or `/val:skew <competitor URL>`
+```
+
+### Other integration
+
 - `/val:quick` does NOT include skew (it's supplementary, not core pipeline)
 - VALUE-SKEW.md can be read by gsr-judge as supplementary context if it exists, but doesn't affect scoring dimensions
