@@ -26,6 +26,7 @@ Output the following to the user:
 |---------|-------------|
 | `/val:idea` | Interview to capture & structure your idea |
 | `/val:reverse` | Reverse engineer a competitor to find spin-off angles |
+| `/val:skew` | Analyze value delivery to find 10x skew opportunities |
 | `/val:research` | Parallel market research (pain, competitors, market size) |
 | `/val:score` | Evidence-based viability scorecard (default-kill) |
 | `/val:decide` | Final BUILD / PIVOT / KILL verdict |
@@ -43,6 +44,9 @@ Output the following to the user:
 
 **"Just do everything"**
 `/val:quick`
+
+**"I want to find leverage"** (Optional, use alongside any flow)
+`/val:skew` or `/val:skew <competitor URL>`
 
 ## Better Research (Optional)
 
