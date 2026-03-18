@@ -1,14 +1,16 @@
-# Design: npm Distribution & SessionStart Update Hook
+# Design: npm Distribution, Update Hook & Firecrawl Optional Fallback
 
 **Date:** 2026-03-18
 **Status:** Approved
-**Goal:** Replace GitHub plugin marketplace distribution with npm, add seamless update notifications via SessionStart hook and statusline — mirroring GetShitDone's proven approach.
+**Goal:** Replace GitHub plugin marketplace distribution with npm, add seamless update notifications via SessionStart hook and statusline (mirroring GSD), and make Firecrawl optional with graceful WebSearch/WebFetch fallback.
 
 ---
 
 ## Context
 
 GetShitRight currently distributes via `claude plugin marketplace add`, which clones via SSH. Users without SSH keys configured for GitHub hit `Permission denied (publickey)`. GSD solves this by publishing to npm (HTTPS-based, zero SSH config needed) and uses JS hooks for non-intrusive update notifications.
+
+Additionally, v0.2 mandated Firecrawl MCP as a hard requirement for all research workflows. Testing revealed this requires users to sign up for a Firecrawl API key — even the marketplace plugin version requires registration. This friction blocks new users from running research immediately. Reverting to optional Firecrawl with WebSearch/WebFetch fallback removes this barrier while preserving enhanced research quality for users who have Firecrawl installed.
 
 ## Decision
 
@@ -18,6 +20,7 @@ Replicate GSD's architecture exactly:
 - Statusline hook for persistent update indicator
 - File manifest with SHA256 hashes for modification detection
 - Local patch backup system with recovery command
+- Firecrawl reverted to optional enhancement with WebSearch/WebFetch fallback
 
 ## Prerequisites
 
@@ -122,13 +125,104 @@ Responsibilities in order:
 - Add `/val:reapply-patches` to command table
 - Remove inline `curl` version check from Step 3 (now handled by statusline hook)
 
-## Section 5: Removals / Reverts
+## Section 5: Firecrawl Optional Fallback
+
+Reverts the v0.2 Firecrawl mandate. Firecrawl becomes an optional enhancement — GSR works out of the box with WebSearch/WebFetch, and produces better results when Firecrawl is available.
+
+### 5.1 Remove Hard Gates
+
+Delete the Firecrawl probe gate from these workflows:
+- `workflows/research.md` — remove Step 2 (Firecrawl Probe Gate)
+- `workflows/reverse.md` — remove Step 1b (Firecrawl Probe Gate)
+- `workflows/skew.md` — remove Step 3 (Firecrawl Probe Gate for URL modes)
+
+Replace each gate with a soft detection step:
+
+```
+## Step N: Detect Research Tools
+
+Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
+
+- If it succeeds: set `firecrawl_available = true`, display "Firecrawl detected — enhanced research mode."
+- If it fails (tool not found): set `firecrawl_available = false`, display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
+- Continue either way — never abort.
+```
+
+### 5.2 Agent Fallback Logic
+
+Update all 4 research agents to use try-and-fallback:
+
+**Files:** `agents/gsr-researcher.md`, `agents/gsr-competitor-analyst.md`, `agents/gsr-market-sizer.md`, `agents/gsr-value-skewer.md`
+
+**Tools line change:**
+```
+# Before
+tools: Read, Write, mcp__firecrawl__*
+
+# After
+tools: Read, Write, WebSearch, WebFetch, mcp__firecrawl__*
+```
+
+**Agent search instructions change:**
+
+Replace Firecrawl-only instructions with fallback logic:
+
+```
+## Research Tool Strategy
+
+Try Firecrawl tools first for all web research:
+- Use `mcp__firecrawl__search` for discovery (finding relevant URLs)
+- Use `mcp__firecrawl__scrape` for deep content extraction
+
+If a Firecrawl tool call fails with "tool not found":
+- Fall back to `WebSearch` for discovery
+- Fall back to `WebFetch` for content extraction
+- Do NOT retry Firecrawl after the first "tool not found" — switch to fallback for the remainder of the session
+
+If a Firecrawl call fails with a rate limit or server error:
+- Wait 5 seconds and retry once
+- If retry fails, fall back to WebSearch/WebFetch for that specific query
+- Continue using Firecrawl for subsequent queries (transient errors don't disable Firecrawl)
+
+Research quality note: Firecrawl produces cleaner, more reliable content extraction. WebSearch/WebFetch results may be less structured. Either way, all claims must cite sources — do not fabricate data regardless of which tool is used.
+```
+
+### 5.3 Command allowed-tools Updates
+
+Add WebSearch and WebFetch back to commands that do research:
+
+- `commands/val/research.md` — add `WebSearch`, `WebFetch` alongside `mcp__firecrawl__*`
+- `commands/val/reverse.md` — add `WebSearch`, `WebFetch` alongside `mcp__firecrawl__*`
+- `commands/val/skew.md` — add `WebSearch`, `WebFetch` alongside `mcp__firecrawl__*`
+- `commands/val/quick.md` — add `WebSearch`, `WebFetch` alongside `mcp__firecrawl__*`
+
+### 5.4 README & Help Updates
+
+**README.md** — change the Firecrawl section from "Better Research (Optional)" to match the original v0.1 tone:
+
+```markdown
+## Better Research (Optional)
+
+GetShitRight works out of the box with built-in web search. For deeper competitor
+analysis and more reliable content extraction, install Firecrawl:
+
+1. Get a free API key at https://firecrawl.dev (no credit card required)
+2. Run: `claude mcp add firecrawl`
+
+Works without it. Better with it.
+```
+
+**workflows/help.md** — update the Firecrawl section with same messaging.
+
+## Section 6: Removals / Reverts
 
 1. **CLAUDE.md** — remove "Update Check (Session Start)" section
 2. **workflows/help.md** — remove Step 3 curl version check
 3. **README.md** — replace marketplace install with `npx get-shit-right-cc`, remove SSH troubleshooting callout
 4. **VERSION** — revert to `0.3.0` (0.3.1 was never published to marketplace; npm/hook work becomes the real 0.3.1)
-5. **CHANGELOG** — replace the 0.3.1 entry with the npm distribution + hook changes
+5. **CHANGELOG** — replace the 0.3.1 entry with the npm distribution + hook + Firecrawl fallback changes
+6. **Firecrawl probe gates** — removed from research, reverse, and skew workflows (replaced by soft detection in Section 5.1)
+7. **Firecrawl-only agent instructions** — replaced with try-and-fallback (Section 5.2)
 
 ## Uninstall
 
