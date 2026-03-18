@@ -33,6 +33,15 @@ When a command completes successfully:
 4. Update `Entry Point` on first step completion (idea or reverse)
 5. Write updated STATE.md back to disk
 
+## Required vs Optional Steps
+
+Required steps for COMPLETE status: idea, research, score, decide
+Optional steps (tracked but not required): reverse, skew
+
+When checking if all required steps are complete for COMPLETE status,
+only check the required steps. Optional steps are tracked with dates
+when completed but do not block the COMPLETE status transition.
+
 ## Checking Prerequisites
 
 When a command needs a prerequisite artifact:
