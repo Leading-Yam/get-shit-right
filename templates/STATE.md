@@ -6,6 +6,7 @@
 <!-- Format when completed: - [x] idea — YYYY-MM-DD -->
 - [ ] idea
 - [ ] reverse
+- [ ] skew
 - [ ] research
 - [ ] score
 - [ ] decide
