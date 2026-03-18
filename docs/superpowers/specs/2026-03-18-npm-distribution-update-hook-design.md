@@ -136,15 +136,15 @@ Delete the Firecrawl probe gate from these workflows:
 - `workflows/reverse.md` — remove Step 1b (Firecrawl Probe Gate)
 - `workflows/skew.md` — remove Step 3 (Firecrawl Probe Gate for URL modes)
 
-Replace each gate with a soft detection step:
+Replace each gate with a soft detection step (UX messaging only — agents independently determine tool availability via 5.2 fallback logic):
 
 ```
 ## Step N: Detect Research Tools
 
 Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-- If it succeeds: set `firecrawl_available = true`, display "Firecrawl detected — enhanced research mode."
-- If it fails (tool not found): set `firecrawl_available = false`, display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
+- If it succeeds: display "Firecrawl detected — enhanced research mode."
+- If it fails (tool not found): display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
 - Continue either way — never abort.
 ```
 
@@ -152,7 +152,11 @@ Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com
 
 Update all 4 research agents to use try-and-fallback:
 
-**Files:** `agents/gsr-researcher.md`, `agents/gsr-competitor-analyst.md`, `agents/gsr-market-sizer.md`, `agents/gsr-value-skewer.md`
+**Files and sections to replace:**
+- `agents/gsr-researcher.md` — replace "Research Tool Strategy" section (lines ~38-44)
+- `agents/gsr-competitor-analyst.md` — replace "Research approach" paragraphs in both Standard and Deep modes (lines ~33-37, ~80-84)
+- `agents/gsr-market-sizer.md` — replace "Research Tool Strategy" section (lines ~36-41)
+- `agents/gsr-value-skewer.md` — replace Firecrawl instructions (line ~65-68) AND remove the existing "If Firecrawl tools are unavailable" fallback block (lines ~67-68) which conflicts with the new pattern
 
 **Tools line change:**
 ```
@@ -174,17 +178,19 @@ Try Firecrawl tools first for all web research:
 - Use `mcp__firecrawl__search` for discovery (finding relevant URLs)
 - Use `mcp__firecrawl__scrape` for deep content extraction
 
-If a Firecrawl tool call fails with "tool not found":
+If a Firecrawl tool call fails (tool not recognized, MCP connection error, or tool not in available tools list):
 - Fall back to `WebSearch` for discovery
 - Fall back to `WebFetch` for content extraction
-- Do NOT retry Firecrawl after the first "tool not found" — switch to fallback for the remainder of the session
+- Do NOT retry Firecrawl after the first failure of this type — switch to fallback for the remainder of this agent's execution
 
 If a Firecrawl call fails with a rate limit or server error:
 - Wait 5 seconds and retry once
 - If retry fails, fall back to WebSearch/WebFetch for that specific query
 - Continue using Firecrawl for subsequent queries (transient errors don't disable Firecrawl)
 
-Research quality note: Firecrawl produces cleaner, more reliable content extraction. WebSearch/WebFetch results may be less structured. Either way, all claims must cite sources — do not fabricate data regardless of which tool is used.
+Research quality note: Firecrawl produces cleaner, more reliable content extraction. WebFetch results for URL scraping may be less complete — note in output when feature extraction relied on WebFetch. Either way, all claims must cite sources — do not fabricate data regardless of which tool is used.
+
+Search budget note: A failed Firecrawl attempt followed by a WebSearch/WebFetch fallback counts as ONE logical search against the agent's budget, not two.
 ```
 
 ### 5.3 Command allowed-tools Updates
