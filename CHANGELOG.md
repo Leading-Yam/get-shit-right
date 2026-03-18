@@ -5,6 +5,15 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] — 2026-03-18
+
+### Added
+- `/val:skew` command — Value Array analysis (Scale, Magnitude, Time, Ease, Place) to find 10x skew opportunities
+- `gsr-value-skewer` agent — analyzes value delivery using DeMarco's framework
+- VALUE-SKEW.md output template
+- Required vs optional step definitions in state workflow (`reverse` and `skew` are optional, don't block COMPLETE)
+- `skew` step added to STATE.md template between `reverse` and `research`
+
 ## [0.2.3] - 2026-03-17
 
 ### Added
