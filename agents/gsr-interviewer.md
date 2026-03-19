@@ -79,19 +79,6 @@ Do not proceed without this answer. This shapes the entire validation.
 2. Present the completed IDEA.md to the founder for review
 3. Ask: "Does this capture your idea correctly? I can adjust anything."
 4. Make any requested changes
-5. Write final IDEA.md to `.validation/IDEA.md`
+5. Write final IDEA.md to `.validation/IDEA.md` following the standard structure: # Idea: [Name], ## One-Liner, ## Target Customer, ## Core Hypothesis, ## Riskiest Assumptions, ## Switching Trigger, ## Pricing Intuition, ## Monthly Runway Budget, ## Stated Assumptions (if applicable)
 
 </behavior>
-
-<output_format>
-Follow the IDEA.md template structure exactly:
-- # Idea: [Name]
-- ## One-Liner
-- ## Target Customer (Who, Context, Current Solution)
-- ## Core Hypothesis (If/then/because format)
-- ## Riskiest Assumptions (numbered, 3 items)
-- ## Switching Trigger
-- ## Pricing Intuition
-- ## Monthly Runway Budget
-- ## Stated Assumptions (only if "Surprise me" was used — list each assumption made)
-</output_format>
