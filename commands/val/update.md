@@ -7,14 +7,14 @@ allowed-tools:
 ---
 
 <objective>
-Update the GetShitRight plugin to the latest version from the marketplace.
+Update the GetShitRight plugin to the latest version via npm.
 </objective>
 
 <process>
 
 ## Step 1: Show Current Version
 
-Read the VERSION file and display it:
+Read `~/.claude/get-shit-right/VERSION` and display it:
 
 ```
 Current version: [version from VERSION]
@@ -25,10 +25,14 @@ Current version: [version from VERSION]
 Run:
 
 ```bash
-claude plugin update get-shit-right
+npx get-shit-right-cc@latest
 ```
 
-## Step 3: Report Result
+## Step 3: Clear Update Cache
+
+Delete `~/.claude/cache/gsr-update-check.json` so the statusline indicator disappears.
+
+## Step 4: Report Result
 
 If the update succeeded, display:
 
@@ -36,18 +40,12 @@ If the update succeeded, display:
 Updated to latest version. Restart Claude Code to apply changes.
 ```
 
-If it was already up to date, display:
-
-```
-Already on the latest version.
-```
-
 If it failed, show the error and suggest:
 
 ```
-Manual update:
-  claude plugin uninstall get-shit-right
-  claude plugin install get-shit-right@get-shit-right
+Update failed. You can try:
+  1. npm cache clean --force
+  2. npx get-shit-right-cc@latest
 ```
 
 </process>
