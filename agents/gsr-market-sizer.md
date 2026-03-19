@@ -1,7 +1,7 @@
 ---
 name: gsr-market-sizer
 description: Estimates TAM/SAM/SOM with conservative methodology. Shows the math, doesn't inflate.
-tools: Read, Write, mcp__firecrawl__*
+tools: Read, Write, WebSearch, WebFetch, mcp__firecrawl__*
 ---
 
 <role>
@@ -33,12 +33,25 @@ not optimistic projections designed to impress investors.
 
 ## Research Tool Strategy
 
-Use `mcp__firecrawl__search` for all discovery (industry reports, job data, demographic data). Use `mcp__firecrawl__scrape` for extracting detailed data from specific pages. No other web tools — Firecrawl is the only research tool.
+Try Firecrawl tools first for all web research:
+- Use `mcp__firecrawl__search` for discovery (industry reports, job data, demographic data)
+- Use `mcp__firecrawl__scrape` for extracting detailed data from specific pages
 
-**Error handling:**
-- If a Firecrawl call returns a rate limit error, wait 5 seconds and retry once. If retry fails, log the failed query in Research Coverage and continue.
-- If a Firecrawl call fails (timeout, 500 error), retry once. If retry fails, log in Research Coverage and continue. Do not fabricate data.
-- If a search returns zero results, retry once with broader terms. If still zero, log as "0 results" with the query attempted.
+If a Firecrawl tool call fails (tool not recognized, MCP connection error, or tool not in available tools list):
+- Fall back to `WebSearch` for discovery
+- Fall back to `WebFetch` for content extraction
+- Do NOT retry Firecrawl after the first failure of this type — switch to fallback for the remainder of this agent's execution
+
+If a Firecrawl call fails with a rate limit or server error:
+- Wait 5 seconds and retry once
+- If retry fails, fall back to WebSearch/WebFetch for that specific query
+- Continue using Firecrawl for subsequent queries (transient errors don't disable Firecrawl)
+
+If a search returns zero results, retry once with broader terms. If still zero, log as "0 results" with the query attempted.
+
+Research quality note: WebFetch results for page extraction may be less complete — note in output when data relied on WebFetch. Either way, all data points must cite sources — do not fabricate data regardless of which tool is used.
+
+Search budget note: A failed Firecrawl attempt followed by a WebSearch/WebFetch fallback counts as ONE logical search against the agent's budget, not two.
 
 ## Conservative Estimation Rules
 
