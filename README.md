@@ -39,8 +39,7 @@ GetShitRight is a free Claude Code plugin that forces you to validate before you
 ## Install
 
 ```bash
-claude plugin marketplace add https://github.com/Leading-Yam/get-shit-right
-claude plugin install get-shit-right@get-shit-right
+npx get-shit-right-cc
 ```
 
 Then:
@@ -95,12 +94,14 @@ KILL verdicts always include alternative angles worth exploring. You're redirect
 |---------|-------------|
 | `/val:idea` | Interview to capture & structure your idea |
 | `/val:reverse` | Reverse engineer a competitor to find spin-off angles |
+| `/val:skew` | Analyze value delivery to find 10x skew opportunities |
 | `/val:research` | Parallel market research (pain, competitors, market size) |
 | `/val:score` | Evidence-based viability scorecard |
 | `/val:decide` | Final BUILD / PIVOT / KILL verdict |
 | `/val:quick` | Full pipeline in one command |
 | `/val:help` | Usage guide & current progress |
 | `/val:update` | Update to the latest version |
+| `/val:reapply-patches` | Recover files backed up during updates |
 
 ### Start from a competitor instead
 
@@ -112,11 +113,11 @@ Deep-dive a competitor's weaknesses and find underserved angles. Pick a spin-off
 
 ## Better Research (Optional)
 
-Install Firecrawl MCP for deeper competitor and Reddit research:
+GetShitRight works out of the box with built-in web search. For deeper competitor
+analysis and more reliable content extraction, install Firecrawl:
 
-```bash
-claude mcp add firecrawl
-```
+1. Get a free API key at https://firecrawl.dev (no credit card required)
+2. Run: `claude mcp add firecrawl`
 
 Works without it. Better with it.
 
@@ -153,6 +154,12 @@ Inspired by [GetShitDone (GSD)](https://github.com/get-shit-done) — the planni
 <p align="center">
   <em>Because 'Done' is just the beginning. 'Right' is the destination.</em>
 </p>
+
+## Uninstall
+
+1. Remove hook entries containing `gsr-` from `~/.claude/settings.json`
+2. Delete `~/.claude/get-shit-right/`
+3. Delete `~/.claude/cache/gsr-update-check.json`
 
 ## License
 
