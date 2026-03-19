@@ -11,22 +11,13 @@ Follow @workflows/state.md to ensure `.validation/STATE.md` exists.
 Check for existing completed validation (multi-idea guard).
 Check for existing IDEA.md (overwrite protection).
 
-## Step 1b: Firecrawl Probe Gate
+## Step 1b: Detect Research Tools
 
-Make a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
+Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-**If the call fails** (tool not found, connection error, any error):
-Abort the workflow with:
-"Firecrawl plugin required for reverse analysis.
-
-GetShitRight uses Firecrawl for reliable web scraping — without it, competitor research may contain hallucinated sources and unverifiable claims.
-
-Install it free from the Plugin Marketplace:
-  /plugin → select firecrawl → /reload-plugins
-
-Then re-run /val:reverse."
-
-**If the call succeeds:** proceed to Step 2.
+- If it succeeds: display "Firecrawl detected — enhanced research mode."
+- If it fails (tool not found): display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
+- Continue either way — never abort.
 
 ## Step 2: Parse Competitor Input
 
