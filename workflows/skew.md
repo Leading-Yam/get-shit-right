@@ -27,26 +27,17 @@ Check two things:
 If neither exists, abort with:
 "Provide a competitor URL as an argument, or run `/val:idea` first to capture your idea."
 
-## Step 3: Firecrawl Probe Gate (URL modes only)
+## Step 3: Detect Research Tools (URL modes only)
 
 If mode is `url_only` or `both`:
 
-Make a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
+Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-**If the call fails** (tool not found, connection error, any error):
-Abort the workflow with:
-"Firecrawl plugin required for URL-based skew analysis.
+- If it succeeds: display "Firecrawl detected — enhanced research mode."
+- If it fails (tool not found): display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
+- Continue either way — never abort.
 
-GetShitRight uses Firecrawl for reliable web scraping — without it, competitor research may contain hallucinated sources and unverifiable claims.
-
-Install it free from the Plugin Marketplace:
-  /plugin → select firecrawl → /reload-plugins
-
-Then re-run `/val:skew <URL>`."
-
-**If the call succeeds:** proceed to Step 4.
-
-For `idea_only` mode: skip this step entirely. Firecrawl is still used for market context searches but is not gate-checked — the agent handles search failures gracefully.
+For `idea_only` mode: skip this step entirely.
 
 ## Step 4: Dispatch Agent
 
