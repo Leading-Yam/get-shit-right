@@ -76,7 +76,7 @@ Captures your idea, target customer, and riskiest assumptions. Don't know the an
 /val:score
 ```
 
-7 dimensions, each 1-5. Default-kill philosophy: you need **25+/35** to earn a BUILD. Score a 1/5 on Pain Intensity or Willingness to Pay? Automatic KILL. No appeals court.
+7 dimensions, each 1-5. Default-kill philosophy: BUILD is hard to earn. The judge reasons through evidence, not formulas — a low score on one dimension can be overridden if another is exceptionally strong. But Pain Intensity at 1/5 is a loud signal you shouldn't ignore.
 
 **4. It delivers a verdict**
 
@@ -135,8 +135,10 @@ Inspired by [GetShitDone (GSD)](https://github.com/gsd-build/get-shit-done) — 
 
 - **Default-kill** — BUILD is hard to earn. Most ideas should get KILL or PIVOT. That's not pessimism, that's math.
 - **Evidence over opinion** — every score cites sources. No hand-wavy "this looks promising."
+- **Judgment over formulas** — agents reason freely through evidence. Scoring thresholds are guidelines, not gates. A strong argument beats a weak number.
 - **Surprise me** — don't know the answer? Say so. You get smart defaults, not blockers.
 - **Always an alternative** — KILL verdicts include spin-off angles. The idea dies, not your ambition.
+- **Gets smarter over time** — GSR compounds learnings across runs. Platform quirks, research tactics, failure patterns — it remembers what worked and what didn't.
 
 ## Who This Is For
 
