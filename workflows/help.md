@@ -33,6 +33,7 @@ Output the following to the user:
 | `/val:quick` | Full pipeline in one command |
 | `/val:help` | This help screen |
 | `/val:update` | Update to the latest version |
+| `/val:reapply-patches` | Recover files backed up during updates |
 
 ## Recommended Flows
 
@@ -50,11 +51,13 @@ Output the following to the user:
 
 ## Better Research (Optional)
 
-Install Firecrawl MCP for deeper competitor and Reddit research:
-```
-claude mcp add firecrawl
-```
-GetShitRight works without it, but research quality improves with it.
+GetShitRight works out of the box with built-in web search. For deeper competitor
+analysis and more reliable content extraction, install Firecrawl:
+
+1. Get a free API key at https://firecrawl.dev (no credit card required)
+2. Run: `claude mcp add firecrawl`
+
+Works without it. Better with it.
 
 ## Current Progress
 
@@ -62,22 +65,5 @@ GetShitRight works without it, but research quality improves with it.
 [If no STATE.md: "No validation in progress. Run `/val:idea` or `/val:reverse` to start."]
 
 ---
-
-## Step 3: Version Check
-
-After displaying help, run this command silently:
-
-```bash
-curl -sf "https://raw.githubusercontent.com/Leading-Yam/get-shit-right/main/VERSION"
-```
-
-- If the remote version is **higher** than the local VERSION, append this notice after the help output:
-
-```
-⚠️  Update available: [local version] → [remote version]
-Run `/val:update` to get the latest improvements.
-```
-
-- If the fetch fails or versions match, show nothing extra.
 
 </process>
