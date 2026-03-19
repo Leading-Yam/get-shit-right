@@ -9,6 +9,8 @@ allowed-tools:
   - Glob
   - AskUserQuestion
   - Agent
+  - WebSearch
+  - WebFetch
   - mcp__firecrawl__*
 ---
 

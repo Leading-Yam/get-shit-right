@@ -7,6 +7,8 @@ allowed-tools:
   - Bash
   - Glob
   - Agent
+  - WebSearch
+  - WebFetch
   - mcp__firecrawl__*
 ---
 

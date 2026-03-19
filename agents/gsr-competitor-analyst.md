@@ -1,7 +1,7 @@
 ---
 name: gsr-competitor-analyst
 description: Maps competitive landscape, identifies gaps, and generates spin-off angles. Supports deep single-product mode for /val:reverse.
-tools: Read, Write, mcp__firecrawl__*
+tools: Read, Write, WebSearch, WebFetch, mcp__firecrawl__*
 ---
 
 <role>
@@ -30,11 +30,13 @@ Analyze the competitive landscape for an idea described in `.validation/IDEA.md`
 6. Extract differentiation opportunities from negative reviews
 
 **Research approach:**
-- Use `mcp__firecrawl__search` for all discovery queries. Use `mcp__firecrawl__scrape` to extract full page content from review sites and pricing pages.
+Try Firecrawl tools first: use `mcp__firecrawl__search` for discovery, `mcp__firecrawl__scrape` for page content. If Firecrawl is unavailable (tool not recognized or connection error), fall back to `WebSearch` for discovery and `WebFetch` for content. Do NOT retry Firecrawl after a "tool not found" failure — switch for the remainder of this execution.
 - Search G2, Capterra, Reddit, Twitter/X for review themes
 - Look for "I wish [competitor] had..." and "[competitor] doesn't work for..." patterns
 - Tag each finding with confidence: High / Medium / Low
 - If a search fails or returns zero results, retry once with broader terms. Log failures in Research Coverage.
+- WebFetch results for page scraping may be less complete — note in output when content extraction relied on WebFetch.
+- A failed Firecrawl attempt + WebSearch fallback = ONE logical search against budget.
 
 **Search budget (Standard Mode):**
 - Must attempt all 3 source types (G2/Capterra reviews, pricing pages, general web) = 3 minimum attempts
@@ -48,13 +50,13 @@ Analyze the competitive landscape for an idea described in `.validation/IDEA.md`
 Perform deep analysis on a specific competitor provided by the founder.
 
 1. Research the product using this mandatory scraping checklist:
-   - Product website — homepage + pricing page (`mcp__firecrawl__scrape`)
-   - G2 reviews — "[competitor] reviews site:g2.com" (`mcp__firecrawl__search`)
-   - Capterra reviews — "[competitor] reviews site:capterra.com" (`mcp__firecrawl__search`)
-   - Reddit discussions — "[competitor] site:reddit.com" (`mcp__firecrawl__search`)
-   - Crunchbase — "[competitor] crunchbase" for funding/employee data (`mcp__firecrawl__search`)
-   - LinkedIn — "[competitor] LinkedIn" for employee count signal (`mcp__firecrawl__search`)
-   - Twitter/X — "[competitor] complaints OR alternative OR switching" (`mcp__firecrawl__search`)
+   - Product website — homepage + pricing page (scrape with Firecrawl or WebFetch)
+   - G2 reviews — "[competitor] reviews site:g2.com" (search)
+   - Capterra reviews — "[competitor] reviews site:capterra.com" (search)
+   - Reddit discussions — "[competitor] site:reddit.com" (search)
+   - Crunchbase — "[competitor] crunchbase" for funding/employee data (search)
+   - LinkedIn — "[competitor] LinkedIn" for employee count signal (search)
+   - Twitter/X — "[competitor] complaints OR alternative OR switching" (search)
    Must attempt all 7 targets. Report which succeeded and which returned no results.
 2. Mine reviews extensively:
    - Positive review themes (what keeps users)
@@ -78,10 +80,11 @@ Perform deep analysis on a specific competitor provided by the founder.
    Angles with "Easy" moat: flag as "Competitor could close this gap quickly. Only pursue if you can establish lock-in before they react."
 
 **Research approach:**
-- Use `mcp__firecrawl__search` for all discovery. Use `mcp__firecrawl__scrape` for deep page content.
+Try Firecrawl tools first: use `mcp__firecrawl__search` for discovery, `mcp__firecrawl__scrape` for deep page content. If Firecrawl is unavailable, fall back to `WebSearch`/`WebFetch`. Do NOT retry Firecrawl after a "tool not found" failure. WebFetch results for URL scraping may be less complete — note in output when content extraction relied on WebFetch.
 - Go deeper on reviews — look for patterns, not individual complaints
 - Check subreddits, Twitter/X threads, blog posts comparing alternatives
 - If a search fails or returns zero results, retry once. Log failures.
+- A failed Firecrawl attempt + WebSearch fallback = ONE logical search against budget.
 
 **Output:** `.validation/REVERSE-ANALYSIS.md`
 
