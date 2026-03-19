@@ -36,7 +36,7 @@ Agent prompts become pure reasoning briefs: who you are, what to think about, wh
 
 ### Changes Per Agent
 
-**gsr-interviewer** — Minimal change. Already reasoning-driven. Remove output format template (moves to validator). Keep adaptive questioning behavior.
+**gsr-interviewer** — Minimal change. Already reasoning-driven. The IDEA.md structure (sections, headings, field names) stays in the agent prompt as a core data contract — every downstream agent depends on it. The `output-structure` validator verifies the contract is met, but the interviewer needs to know the structure to produce it. Remove cosmetic formatting rules only. Keep adaptive questioning behavior.
 
 **gsr-researcher** — Keep skeptical investigator identity and platform-aware research approach. Remove search budgets, evidence citation format, self-review checklist, Firecrawl fallback logic. Workflow injects tool routing and memory context.
 
@@ -62,7 +62,7 @@ Agent prompts shrink 40-60%. Agents become more adaptive, handle edge cases bett
 
 ### Directory Structure
 
-New `validators/` directory at project root.
+New `validators/` directory at project root. Validators follow the same YAML frontmatter convention as agents (`name`, `description`, `tools`) but use a `<checks>` section instead of `<behavior>` to emphasize their checking-not-reasoning role.
 
 ### Hard Validators (feedback loop)
 
@@ -72,7 +72,8 @@ New `validators/` directory at project root.
 - Applies to: researcher, competitor-analyst, market-sizer, judge.
 
 **output-structure.md**
-- Checks: output is parseable, contains required sections for the target template, no missing headers.
+- Input: agent output + template path (passed by workflow, e.g., `templates/IDEA.md`, `templates/SCORECARD.md`).
+- Checks: output is parseable, contains required sections matching the target template, no missing headers.
 - Pure format check — no judgment on content quality.
 - Applies to: all agents.
 
@@ -93,12 +94,22 @@ New `validators/` directory at project root.
 - Flags: "High confidence claimed with only 1 source."
 - Applies to: all research agents.
 
+### Validator Interface
+
+**Input contract:** Workflows pass validators two things:
+1. The agent's output (file path or content)
+2. Context parameters (e.g., template path for `output-structure`, agent name for `research-coverage`)
+
+**Output contract:** Validators return:
+1. Status: `PASS` | `FAIL` | `FLAG`
+2. Issues: list of `{section, issue, severity}` objects
+3. No side effects — validators never modify agent output.
+
 ### Validator Behavior
 
-- Validators never modify agent output. They return PASS/FAIL/FLAG + specific issues.
 - Validators are stateless. Read output, check, return findings.
 - Validators are composable. Workflows pick which validators apply to which agent.
-- Hard vs. soft classification is configured in the workflow, not the validator. Same validator can be hard for one agent and soft for another.
+- Hard vs. soft classification is configured in the workflow, not the validator. Same validator can be hard for one agent and soft for another. The workflow decides whether a `FAIL` triggers a retry loop or gets downgraded to a flag.
 
 ### Validation Flow
 
@@ -137,6 +148,7 @@ Observations:
 - project: project identifier (null for global)
 - created: ISO date
 - last_confirmed: ISO date
+- run_count: integer (incremented each time learning is retrieved and relevant)
 ```
 
 ### Relations
@@ -168,8 +180,12 @@ learning --supersedes--> learning     (learning updated/refined)
 Project learning observed once → stays project
 Project learning confirmed 2x across different projects → promoted to global
 Global learning contradicted by new evidence → weakened (strength → "weak")
-Global learning not confirmed in 10+ runs → eligible for pruning
+Global learning run_count not incremented in 10+ consecutive runs → eligible for pruning
 ```
+
+**Cross-project promotion mechanism:** When a workflow writes a project learning, it also searches global memory for existing learnings with the same `agent` + `category` + similar `signal` text. If a match is found tagged to a *different* project, the workflow promotes the learning: creates a new global entity (or updates the existing one), sets `layer: "global"`, `project: null`, `strength: "moderate"`, and adds a `derived_from` relation to both project learnings.
+
+**Pruning mechanism:** After memory read (step 1 of each workflow), the workflow increments `run_count` on every retrieved learning. Learnings not retrieved in 10 consecutive runs (i.e., `run_count` hasn't changed while other learnings have been incremented 10 times) are candidates for pruning. The workflow deletes them via `mcp__memory__delete_entities`.
 
 ---
 
@@ -222,9 +238,30 @@ Inject tool_context into all agent prompts for this run
 6. Write memory
 7. GSD handoff (unchanged)
 
-### skew.md and reverse.md
+### skew.md
 
-Same pattern: add memory read before agent, validation after agent, memory write after validation.
+1. Check prerequisites
+2. Detect tools → set tool_context
+3. Read memory (global + project learnings for value-skewer)
+4. Dispatch gsr-value-skewer (with tool_context + memory)
+5. Validate:
+   - evidence-integrity (hard) → retry loop
+   - confidence-calibration (soft) → annotate
+6. Write memory (skew insights, research tactics)
+7. Display results with flags
+
+### reverse.md
+
+1. Check prerequisites
+2. Detect tools → set tool_context
+3. Read memory (global + project learnings for competitor-analyst)
+4. Dispatch gsr-competitor-analyst in deep mode (with tool_context + memory)
+5. Validate:
+   - evidence-integrity (hard) → retry loop
+   - research-coverage (soft) → annotate
+   - confidence-calibration (soft) → annotate
+6. Write memory (competitor insights, research tactics)
+7. Display results with flags
 
 ### Principle
 
@@ -285,9 +322,19 @@ workflows/
 - Scoring thresholds become advisory, not deterministic.
 - Tool fallback logic centralized in workflows.
 
+## Migration Sequence
+
+Every agent and workflow file changes. The implementation must follow this order to keep the system working at each step:
+
+1. **Validators first** — Create `validators/` directory and all 5 validator specs. These are new files with no dependencies, safe to add.
+2. **Memory module** — Create `memory/` directory with schema and operations. Also additive, no existing files change.
+3. **Agents** — Rewrite agent prompts to pure reasoning briefs. At this point agents produce less-structured output, but validators don't run yet — acceptable for a transitional state.
+4. **Workflows** — Update workflows to wire in memory read/write, tool routing, and validator dispatch. This is the integration step that connects all three layers.
+5. **Testing** — Run full validation pipeline (`/val:quick`) against a test idea to verify end-to-end behavior.
+
 ## Risks
 
 - **Agent output quality without rigid prompts.** Mitigated by the validator feedback loop — agents that produce poor output get specific correction signals.
 - **Memory bloat over many runs.** Mitigated by the 5-learning cap per invocation and the pruning logic for stale global learnings.
 - **Validator overhead adding latency.** Mitigated by running soft validators in parallel and keeping hard validators focused (2 max).
-- **Migration complexity.** Every agent and workflow file changes. Requires careful sequencing — agents first, then validators, then workflow integration, then memory.
+- **Migration path.** See Migration Sequence above — each step is additive or isolated, so the system remains functional throughout.
