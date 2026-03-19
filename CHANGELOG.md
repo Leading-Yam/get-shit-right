@@ -5,6 +5,37 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] — 2026-03-19
+
+### Architecture: Thin Agent, Heavy Tools
+
+Major internal redesign separating agents, validators, and memory into three distinct layers.
+
+**Agent layer** — All 6 agents rewritten as pure reasoning briefs. Agents focus on thinking, not following rigid templates. The judge now reasons through the scoring framework as advisory guidance, not mechanical rules.
+
+**Validator layer** — New `validators/` directory with 5 validators:
+- `evidence-integrity` (hard) — checks source URLs on factual claims
+- `output-structure` (hard) — checks required sections against templates
+- `research-coverage` (soft) — flags platform breadth gaps
+- `scoring-integrity` (soft) — surfaces auto-KILL signals and unsupported scores
+- `confidence-calibration` (soft) — flags confidence/evidence mismatches
+
+Hard validators retry (max 2). Soft validators annotate output with flags.
+
+**Memory layer** — New `memory/` module using MCP Memory Server:
+- 3-layer memory: working (session), project (per-idea), global (cross-project)
+- Agents receive relevant past learnings before execution
+- Learnings compound over time — project insights promote to global after cross-project confirmation
+- Token-efficient: max 5 learnings per agent, terse format, targeted retrieval
+
+**Workflow changes** — All workflows updated to orchestrate the three layers:
+- Tool routing centralized (Firecrawl detection done once, injected into agents)
+- Memory read before agent execution, memory write after validation
+- Validator dispatch with hard/soft classification per workflow
+
+No changes to commands, templates, state management, or `.validation/` structure.
+External behavior is identical — internal reasoning is dramatically improved.
+
 ## [0.3.0] — 2026-03-19
 
 ### Added
