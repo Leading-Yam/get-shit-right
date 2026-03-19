@@ -5,6 +5,30 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- npm distribution as `get-shit-right-cc` — install via `npx get-shit-right-cc`
+- SessionStart hook for background update checking (24-hour cooldown)
+- Statusline hook showing yellow `⬆ /val:update` when update available
+- File manifest with SHA256 hashes for detecting user modifications during updates
+- Local patch backup system (`gsr-local-patches/`) with `/val:reapply-patches` recovery command
+- Uninstall instructions in README
+- WebSearch/WebFetch fallback for all research agents when Firecrawl is unavailable
+
+### Changed
+- `/val:update` now uses `npx get-shit-right-cc@latest` instead of `claude plugin update`
+- Firecrawl reverted from hard requirement to optional enhancement — all workflows work without it
+- Research agents try Firecrawl first, fall back to WebSearch/WebFetch if unavailable
+- Install instructions updated from marketplace to npm
+- `/val:help` version check removed (replaced by statusline hook)
+
+### Removed
+- Firecrawl probe gates from research, reverse, and skew workflows
+- `curl` version check from `/val:help` Step 3
+- SSH-based marketplace installation requirement
+- "Update Check (Session Start)" section from CLAUDE.md
+
 ## [0.3.0] — 2026-03-18
 
 ### Added
