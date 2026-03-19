@@ -24,6 +24,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Leading-Yam/get-shit-right"
+    "url": "git+https://github.com/Leading-Yam/get-shit-right.git"
   }
 }

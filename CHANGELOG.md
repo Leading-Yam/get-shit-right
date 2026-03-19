@@ -5,7 +5,7 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.0] — 2026-03-19
 
 ### Added
 - npm distribution as `get-shit-right-cc` — install via `npx get-shit-right-cc`
@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Statusline hook showing yellow `⬆ /val:update` when update available
 - File manifest with SHA256 hashes for detecting user modifications during updates
 - Local patch backup system (`gsr-local-patches/`) with `/val:reapply-patches` recovery command
+- `/val:skew` command — Value Array analysis (Scale, Magnitude, Time, Ease, Place) to find 10x skew opportunities
+- `gsr-value-skewer` agent — analyzes value delivery using DeMarco's framework
+- VALUE-SKEW.md output template
+- Required vs optional step definitions in state workflow (`reverse` and `skew` are optional, don't block COMPLETE)
 - Uninstall instructions in README
 - WebSearch/WebFetch fallback for all research agents when Firecrawl is unavailable
 
@@ -28,15 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `curl` version check from `/val:help` Step 3
 - SSH-based marketplace installation requirement
 - "Update Check (Session Start)" section from CLAUDE.md
-
-## [0.3.0] — 2026-03-18
-
-### Added
-- `/val:skew` command — Value Array analysis (Scale, Magnitude, Time, Ease, Place) to find 10x skew opportunities
-- `gsr-value-skewer` agent — analyzes value delivery using DeMarco's framework
-- VALUE-SKEW.md output template
-- Required vs optional step definitions in state workflow (`reverse` and `skew` are optional, don't block COMPLETE)
-- `skew` step added to STATE.md template between `reverse` and `research`
 
 ## [0.2.3] - 2026-03-17
 
