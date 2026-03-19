@@ -59,6 +59,17 @@ analysis and more reliable content extraction, install Firecrawl:
 
 Works without it. Better with it.
 
+## How It Works (v0.4.0)
+
+GSR uses a three-layer architecture:
+
+- **Agents** reason freely about your idea — they think, not follow scripts
+- **Validators** check agent output for quality (evidence integrity, structure, coverage)
+- **Memory** compounds learnings across runs — GSR gets better the more you use it
+
+Hard validators (evidence integrity, output structure) retry automatically.
+Soft validators (coverage, confidence calibration) surface flags for you to review.
+
 ## Current Progress
 
 [If STATE.md exists: show step checklist with dates]
