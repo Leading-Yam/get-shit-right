@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <em>Inspired by <a href="https://github.com/get-shit-done">GetShitDone (GSD)</a> — which helps you build things right.<br>
+  <em>Inspired by <a href="https://github.com/gsd-build/get-shit-done">GetShitDone (GSD)</a> — which helps you build things right.<br>
   GetShitRight makes sure you're building the <strong>right thing</strong> in the first place.</em>
 </p>
 
@@ -34,7 +34,7 @@ Here's how most "brilliant" ideas go:
 
 The problem was never the building. The problem is building the **wrong thing**.
 
-GetShitRight is a free Claude Code plugin that forces you to validate before you code. Think of it as a brutally honest co-founder who does the market research you keep skipping.
+GetShitRight is a free, open-source tool for Claude Code that forces you to validate before you code. One command to install, no setup headaches. Think of it as a brutally honest co-founder who does the market research you keep skipping.
 
 ## Install
 
@@ -123,7 +123,7 @@ Works without it. Better with it.
 
 ## GSD Integration
 
-Inspired by [GetShitDone (GSD)](https://github.com/get-shit-done) — the planning and execution engine for Claude Code. If you use GSD, a BUILD verdict generates `CONSTRAINTS.md` that GSD reads directly:
+Inspired by [GetShitDone (GSD)](https://github.com/gsd-build/get-shit-done) — the planning and execution engine for Claude Code. If you use GSD, a BUILD verdict generates `CONSTRAINTS.md` that GSD reads directly:
 
 ```
 /val:decide  →  .validation/CONSTRAINTS.md  →  /gsd:new-project
