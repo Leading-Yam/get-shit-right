@@ -1,7 +1,7 @@
 <purpose>
 Orchestrate parallel market research by spawning 3 agents concurrently:
 pain researcher, competitor analyst, and market sizer.
-Handles Firecrawl nudge and merges results into RESEARCH.md and COMPETITORS.md.
+Detects research tools and merges results into RESEARCH.md and COMPETITORS.md.
 </purpose>
 
 <process>
@@ -16,24 +16,15 @@ Check for `.validation/IDEA.md`:
 
 Check for existing research artifacts (overwrite protection).
 
-## Step 2: Firecrawl Probe Gate
+## Step 2: Detect Research Tools
 
-Make a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
+Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-**If the call fails** (tool not found, connection error, any error):
-Abort the workflow with:
-"Firecrawl plugin required for research.
+- If it succeeds: display "Firecrawl detected — enhanced research mode."
+- If it fails (tool not found): display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
+- Continue either way — never abort.
 
-GetShitRight uses Firecrawl for reliable web scraping — without it, research results may contain hallucinated sources and unverifiable claims.
-
-Install it free from the Plugin Marketplace:
-  /plugin → select firecrawl → /reload-plugins
-
-Then re-run /val:research."
-
-**If the call succeeds:** proceed to Step 3.
-
-Display: "Firecrawl verified. Spawning 3 research agents..."
+Display: "Spawning 3 research agents..."
 
 ## Step 3: Spawn Parallel Research Agents
 
