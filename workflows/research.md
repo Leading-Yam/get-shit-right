@@ -1,7 +1,7 @@
 <purpose>
 Orchestrate parallel market research by spawning 3 agents concurrently:
 pain researcher, competitor analyst, and market sizer.
-Detects research tools and merges results into RESEARCH.md and COMPETITORS.md.
+Detects tools, injects memory, validates output, and merges results.
 </purpose>
 
 <process>
@@ -20,97 +20,124 @@ Check for existing research artifacts (overwrite protection).
 
 Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-- If it succeeds: display "Firecrawl detected — enhanced research mode."
-- If it fails (tool not found): display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
-- Continue either way — never abort.
+- If it succeeds: set tool_context to "Use `mcp__firecrawl__search` for discovery and `mcp__firecrawl__scrape` for deep content extraction."
+- If it fails (tool not found): set tool_context to "Use `WebSearch` for discovery and `WebFetch` for content extraction. Firecrawl is not available. Note in output when content extraction relied on WebFetch."
+- Display tool status to founder. Continue either way — never abort.
 
-Display: "Spawning 3 research agents..."
+## Step 3: Read Memory
 
-## Step 3: Spawn Parallel Research Agents
+For each agent (researcher, competitor-analyst, market-sizer):
+
+1. Search MCP Memory for global learnings: `mcp__memory__search_nodes` with query "learning:{agent-name} global"
+2. Search MCP Memory for project learnings: `mcp__memory__search_nodes` with query "learning:{agent-name} {project-id}"
+3. Filter, rank by strength + recency, cap at 5 per agent
+4. Format as `<memory_context>` block (see @memory/operations.md)
+5. Increment `run_count` on each retrieved learning
+
+If MCP Memory is unavailable (tools not recognized), skip silently — memory is optional.
+
+## Step 4: Spawn Parallel Research Agents
 
 Read `.validation/IDEA.md` to prepare context for all agents.
 
-Spawn 3 agents concurrently:
+Spawn 3 agents concurrently, each receiving: IDEA.md content + tool_context + memory_context.
 
 **Agent 1: gsr-researcher (Pain Validation)**
-- Provide: IDEA.md content
-- Task: Search Reddit, HN, Indie Hackers, Twitter/X for pain signals
 - Output: `.validation/RESEARCH-PAIN.md` (temporary)
 
 **Agent 2: gsr-competitor-analyst (Standard Mode)**
-- Provide: IDEA.md content
-- Task: Map competitive landscape, find gaps
 - Output: `.validation/COMPETITORS.md`
 
 **Agent 3: gsr-market-sizer (Market Estimation)**
-- Provide: IDEA.md content
-- Task: Estimate TAM/SAM/SOM with conservative methodology
 - Output: `.validation/RESEARCH-MARKET.md` (temporary)
 
 Wait for all 3 agents to complete.
 
-## Step 4: Smart Merge
+## Step 5: Validate Agent Outputs
 
-Display: "All agents complete. Pain researcher: X sources. Competitor analyst: Y sources. Market sizer: Z sources. Merging and cross-referencing results..."
-(Read each agent's output file to count sources before displaying.)
+For each agent's output file (check existence first, skip validation if agent failed to produce output):
 
-Read the outputs from the parallel agents. Before reading each file, check if it exists. If an agent's output file is missing, log a warning and continue with available data.
+**Hard validation (sequential, retry on failure):**
+- Dispatch `validators/evidence-integrity.md` against the output file
+- If FAIL: feed issues back to the original agent with instruction to fix, re-run agent (max 2 retries)
+- If still FAIL after 2 retries: annotate output with warning and continue
+
+**Soft validation (parallel, flag only):**
+- Dispatch `validators/research-coverage.md` against the output file
+- Dispatch `validators/confidence-calibration.md` against the output file
+- Collect all flags
+
+## Step 6: Smart Merge
+
+Display: "All agents complete. Merging and cross-referencing results..."
+
+Read the outputs from the parallel agents. Before reading each file, check if it exists.
+If an agent's output file is missing, log a warning and continue with available data.
 
 **Input files:**
 - `.validation/RESEARCH-PAIN.md` (from gsr-researcher)
 - `.validation/RESEARCH-MARKET.md` (from gsr-market-sizer)
 - `.validation/COMPETITORS.md` `## Scoring Input` section (from gsr-competitor-analyst)
 
-**Merge operations (perform as explicit reasoning steps):**
+**Merge operations:**
 
-### 4a: Deduplication
-Scan all agent outputs for overlapping URLs (literal string matching). When the same URL appears in multiple agent outputs:
+### 6a: Deduplication
+Scan all agent outputs for overlapping URLs. When the same URL appears in multiple outputs:
 - Consolidate into a single reference
-- Note: "Found independently by [agent 1] and [agent 2]" — this is a positive signal
+- Note: "Found independently by [agent 1] and [agent 2]" — positive signal
 
-### 4b: Cross-Referencing
+### 6b: Cross-Referencing
 Compare assessments across agents for the same scoring dimensions:
-- Pain researcher's willingness-to-pay signals vs competitor analyst's pricing gap findings
+- Pain researcher's WTP signals vs competitor analyst's pricing gaps
 - Pain researcher's timing signals vs market sizer's timing signals
-- Flag any disagreements for the Contradictions section
+- Flag disagreements for the Contradictions section
 
-### 4c: Assemble RESEARCH.md
-Combine into `.validation/RESEARCH.md` following the template structure:
+### 6c: Assemble RESEARCH.md
+Combine into `.validation/RESEARCH.md` following the template:
 1. Pain Validation (from RESEARCH-PAIN.md)
 2. Market Size (from RESEARCH-MARKET.md)
 3. Estimated Maintenance Cost (from RESEARCH-MARKET.md)
-4. Scoring Inputs (consolidated from all agents — side-by-side when two agents assess the same dimension)
+4. Scoring Inputs (consolidated — side-by-side when two agents assess the same dimension)
 5. Converging Signals (findings supported by 2+ agents)
-6. Contradictions (disagreements between agents with both sides cited)
-7. Research Coverage (merged coverage tables from all agents)
-8. Research Gaps & Recommended Actions (merged from all agents, each gap linked to a scoring dimension with a suggested founder action)
+6. Contradictions (disagreements between agents)
+7. Research Coverage (merged tables)
+8. Research Gaps & Recommended Actions
 
-If any agent's output was missing, add at the top: "⚠️ Incomplete research — [agent name] failed to produce results."
+Append any soft validator flags as a `## Validation Flags` section at the end.
 
-### 4d: Cleanup
-Delete the temporary files:
-- `.validation/RESEARCH-PAIN.md`
-- `.validation/RESEARCH-MARKET.md`
+If any agent's output was missing, add at top: "Warning: Incomplete research — [agent name] failed."
 
-Ensure `.validation/COMPETITORS.md` is complete.
+### 6d: Cleanup
+Delete temporary files: `.validation/RESEARCH-PAIN.md`, `.validation/RESEARCH-MARKET.md`
 
-## Step 5: Research Quality Summary
+## Step 7: Write Memory
 
-Read the merged `.validation/RESEARCH.md` and report:
-- Total verified sources across all agents
-- Number of research gaps identified
-- Number of contradictions found between agents
-- Any agents that failed to produce output
+For each agent that produced output:
+1. Identify learnings from the run (platform insights, tool issues, research tactics that worked)
+2. Create project learning entities in MCP Memory (see @memory/operations.md)
+3. Check for cross-project promotion opportunities
+4. Check for contradictions with existing learnings
 
-Display: "Research complete. [X verified sources, Y gaps, Z contradictions found]"
+If MCP Memory is unavailable, skip silently.
 
-## Step 6: Update State
+## Step 8: Research Quality Summary
+
+Read merged `.validation/RESEARCH.md` and report:
+- Total verified sources
+- Number of research gaps
+- Number of contradictions
+- Any agents that failed
+- Any validation flags
+
+Display: "Research complete. [X verified sources, Y gaps, Z contradictions, W validation flags]"
+
+## Step 9: Update State
 
 Update `.validation/STATE.md`:
 - Check `research` step with today's date
 - Keep `Current Status` as `IN_PROGRESS`
 
-## Step 7: Next Steps
+## Step 10: Next Steps
 
 "Research complete. Results in `.validation/RESEARCH.md` and `.validation/COMPETITORS.md`.
 
