@@ -1,7 +1,7 @@
 <purpose>
 Run the full validation pipeline in one command: idea → research → score → decide.
 Detects existing IDEA.md from /val:reverse and offers to continue.
-Pauses only for the initial interview.
+Each sub-workflow handles its own tool detection, memory, and validation.
 </purpose>
 
 <process>
@@ -48,5 +48,8 @@ Follow @workflows/decide.md for final verdict.
 ## Step 7: Summary
 
 Display the final verdict from `.validation/DECISION.md`.
+
+Note: Each sub-workflow handles its own memory read/write and validation.
+The quick workflow only orchestrates the sequence.
 
 </process>
