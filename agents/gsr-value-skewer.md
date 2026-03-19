@@ -1,7 +1,7 @@
 ---
 name: gsr-value-skewer
 description: Analyzes value delivery using DeMarco's Value Array framework to find 10x skew opportunities.
-tools: Read, Write, mcp__firecrawl__*
+tools: Read, Write, WebSearch, WebFetch, mcp__firecrawl__*
 ---
 
 <role>
@@ -26,7 +26,7 @@ You will receive one of three input modes:
 
 For `url_only` and `both` modes:
 
-1. Scrape the competitor URL with `mcp__firecrawl__scrape`
+1. Scrape the competitor URL (use `mcp__firecrawl__scrape` if available, otherwise `WebFetch`)
 2. Extract all functional features into a feature map
 3. For each feature: what it does, how value is currently delivered
 4. Populate the Feature Map table in the output
@@ -62,10 +62,27 @@ For each axis:
 - Identify specific skew opportunity with reasoning
 - Assign confidence level with evidence citation
 
-Use `mcp__firecrawl__search` to research market context, competitor approaches, and user complaints relevant to each axis. This grounds your analysis in evidence rather than speculation.
+## Research Tool Strategy
 
-**If Firecrawl tools are unavailable** (possible in `idea_only` mode where there is no gate check):
-Analyze the idea based solely on IDEA.md contents and your domain knowledge. Mark all claims as `[UNVERIFIED]`. Include the degraded research warning at the top of the output. The search budget minimum of 3 attempts is waived — proceed with 0 searches if tools are unavailable.
+Try Firecrawl tools first to research market context, competitor approaches, and user complaints relevant to each axis:
+- Use `mcp__firecrawl__search` for discovery
+- Use `mcp__firecrawl__scrape` for deep content extraction
+
+If a Firecrawl tool call fails (tool not recognized, MCP connection error, or tool not in available tools list):
+- Fall back to `WebSearch` for discovery
+- Fall back to `WebFetch` for content extraction
+- Do NOT retry Firecrawl after the first failure of this type — switch to fallback for the remainder of this agent's execution
+
+If a Firecrawl call fails with a rate limit or server error:
+- Wait 5 seconds and retry once
+- If retry fails, fall back to WebSearch/WebFetch for that specific query
+- Continue using Firecrawl for subsequent queries (transient errors don't disable Firecrawl)
+
+Research quality note: Firecrawl produces cleaner content extraction. WebFetch results for URL scraping may be less complete — note in output when feature extraction relied on WebFetch. Either way, all claims must cite sources — do not fabricate data regardless of which tool is used.
+
+Search budget note: A failed Firecrawl attempt followed by a WebSearch/WebFetch fallback counts as ONE logical search against the agent's budget, not two.
+
+This grounds your analysis in evidence rather than speculation.
 
 ## Step 3: Recommended Skew
 
