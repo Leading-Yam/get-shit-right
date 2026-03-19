@@ -1,6 +1,6 @@
 <purpose>
-Orchestrate Value Array analysis using DeMarco's framework. Determine input mode,
-dispatch gsr-value-skewer agent, display results, and update state.
+Orchestrate Value Array analysis using DeMarco's framework. Detect tools, inject memory,
+dispatch gsr-value-skewer agent, validate output, display results, and update state.
 </purpose>
 
 <process>
@@ -9,7 +9,7 @@ dispatch gsr-value-skewer agent, display results, and update state.
 
 Follow @workflows/state.md to ensure `.validation/STATE.md` exists.
 Check for existing completed validation (multi-idea guard).
-Check for existing `.validation/VALUE-SKEW.md` — if it exists, follow the Overwrite Protection process from @workflows/state.md (warn and wait for user confirmation before proceeding).
+Check for existing `.validation/VALUE-SKEW.md` — overwrite protection.
 
 ## Step 2: Determine Input Mode
 
@@ -33,55 +33,78 @@ If mode is `url_only` or `both`:
 
 Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
-- If it succeeds: display "Firecrawl detected — enhanced research mode."
-- If it fails (tool not found): display "Using built-in web search. Install Firecrawl for deeper research: https://firecrawl.dev"
-- Continue either way — never abort.
+- If it succeeds: set tool_context to use Firecrawl tools
+- If it fails: set tool_context to use WebSearch/WebFetch
+- Display tool status. Continue either way.
 
 For `idea_only` mode: skip this step entirely.
 
-## Step 4: Dispatch Agent
+## Step 4: Read Memory
 
-Dispatch the `gsr-value-skewer` agent with:
-- **Input mode:** `idea_only`, `url_only`, or `both`
-- **URL:** the competitor URL from `$ARGUMENTS` (if provided)
-- **IDEA.md contents:** read and pass `.validation/IDEA.md` contents (if exists)
+1. Search MCP Memory for global learnings: `mcp__memory__search_nodes` with query "learning:value-skewer global"
+2. Search MCP Memory for project learnings: `mcp__memory__search_nodes` with query "learning:value-skewer {project-id}"
+3. Filter, rank by strength + recency, cap at 5
+4. Format as `<memory_context>` block
+5. Increment `run_count` on each retrieved learning
 
-The agent writes `.validation/VALUE-SKEW.md`.
+If MCP Memory unavailable, skip silently.
 
-## Step 5: Display Results
+## Step 5: Dispatch Agent
+
+Dispatch `gsr-value-skewer` agent with:
+- Input mode: `idea_only`, `url_only`, or `both`
+- URL: the competitor URL from `$ARGUMENTS` (if provided)
+- IDEA.md contents (if exists)
+- tool_context from Step 3
+- memory_context from Step 4
+
+Agent writes `.validation/VALUE-SKEW.md`.
+
+## Step 6: Validate Output
+
+**Hard validation:**
+- Dispatch `validators/evidence-integrity.md` against `.validation/VALUE-SKEW.md`
+- If FAIL: feed issues back to agent, retry (max 2)
+- If still FAIL: annotate and continue
+
+**Soft validation:**
+- Dispatch `validators/confidence-calibration.md` against `.validation/VALUE-SKEW.md`
+- Collect flags
+
+## Step 7: Write Memory
+
+1. Store skew insights as project memory (which axes had signal, which didn't)
+2. Store research tactics that worked (e.g., "competitor pricing page had better data than G2")
+3. Check for cross-project promotion
+4. If MCP Memory unavailable, skip silently
+
+## Step 8: Display Results
 
 Read `.validation/VALUE-SKEW.md` and display to the founder:
 
-1. Show the **Recommended Skew** section prominently:
+1. Show **Recommended Skew** prominently:
    "**Recommended Skew: [Axis]** — [The Play]"
 
-2. Show the **CENTS Advisory** verdict:
-   "**CENTS Verdict:** [Commodity / Skewable Asset / Already Skewed]"
+2. Show **CENTS Advisory** verdict.
    Note: "This is informational — it doesn't affect your validation score."
 
-3. If `both` mode, highlight the **Mapping to Your Idea** section.
+3. If `both` mode, highlight **Mapping to Your Idea** section.
 
-## Step 6: Update State
+4. Append any validation flags.
+
+## Step 9: Update State
 
 Update `.validation/STATE.md`:
-- Check `skew` step with today's date: `- [x] skew — YYYY-MM-DD`
+- Check `skew` step with today's date
 - Set `Current Status` to `IN_PROGRESS` if not already
 
-Do NOT update `Entry Point` — skew is a supplementary step, not an entry point.
+Do NOT update `Entry Point` — skew is supplementary.
 
-## Step 7: Next Steps
+## Step 10: Next Steps
 
-"Your value skew analysis is in `.validation/VALUE-SKEW.md`."
-
-Then, based on current state:
-
-- If no `.validation/IDEA.md`:
-  "Next: Run `/val:idea` to capture your idea, or `/val:reverse` to find spin-off angles."
-
-- If `.validation/IDEA.md` exists but no RESEARCH.md:
-  "Next: Run `/val:research` to validate your idea with market data."
-
-- If `.validation/IDEA.md` and RESEARCH.md exist:
-  "Next: Run `/val:score` to score your idea."
+Based on current state:
+- If no IDEA.md: "Next: Run `/val:idea` or `/val:reverse`."
+- If IDEA.md but no RESEARCH.md: "Next: Run `/val:research`."
+- If both exist: "Next: Run `/val:score`."
 
 </process>
