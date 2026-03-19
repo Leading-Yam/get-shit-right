@@ -1,0 +1,29 @@
+{
+  "name": "get-shit-right-cc",
+  "version": "0.3.1",
+  "description": "GetShitRight — Evidence-backed BUILD/PIVOT/KILL decisions for SaaS ideas. Claude Code plugin.",
+  "bin": {
+    "get-shit-right-cc": "bin/install.js"
+  },
+  "files": [
+    "bin/",
+    "hooks/",
+    "commands/",
+    "agents/",
+    "workflows/",
+    "templates/",
+    "CLAUDE.md",
+    "VERSION",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": ["claude-code", "saas", "validation", "plugin"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Leading-Yam/get-shit-right"
+  }
+}
