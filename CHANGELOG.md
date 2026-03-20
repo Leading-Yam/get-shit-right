@@ -5,16 +5,19 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.4.2] — 2026-03-20
+## [0.4.3] — 2026-03-20
 
 ### Fixed
 
-- **Legacy hook cleanup** — installer now purges malformed GSR entries from prior installs (bare `{ command }` objects and entries missing `matcher` key) that caused `Expected array, but received undefined` on SessionStart
-- **Stale Notification hook** — installer removes legacy `Notification` hook key left by pre-0.4.1 installs
+- **Install path** — installer now writes to `~/.claude/plugins/marketplaces/get-shit-right/` where Claude Code discovers plugin commands, instead of `~/.claude/get-shit-right/` which was invisible to the command registry
+- **Legacy migration** — installer removes stale `~/.claude/get-shit-right/` directory from prior installs
+- **Hook paths** — all hook scripts and command files updated to reference the correct plugin path
+- **Legacy hook cleanup** — installer purges all malformed GSR entries from settings.json (bare `{ command }` objects, missing `matcher` key, stale `Notification` key)
+- **Marketplace registration** — installer ensures `enabledPlugins` and `extraKnownMarketplaces` entries exist in settings.json
 
 ### Changed
 
-- **README** — added Upgrade section explaining single-install-all-projects behavior; pinned `@latest` tag in install command
+- **README** — added Upgrade section; pinned `@latest` tag in install command; updated uninstall instructions
 
 ## [0.4.1] — 2026-03-20
 

@@ -16,7 +16,9 @@ if (major < 16) {
 
 // --- Constants ---
 const HOME = os.homedir();
-const INSTALL_DIR = path.join(HOME, '.claude', 'get-shit-right');
+const PLUGIN_DIR = path.join(HOME, '.claude', 'plugins', 'marketplaces', 'get-shit-right');
+const LEGACY_DIR = path.join(HOME, '.claude', 'get-shit-right');
+const INSTALL_DIR = PLUGIN_DIR;
 const SETTINGS_PATH = path.join(HOME, '.claude', 'settings.json');
 const MANIFEST_NAME = 'gsr-file-manifest.json';
 const PATCHES_DIR = path.join(INSTALL_DIR, 'gsr-local-patches');
@@ -110,7 +112,13 @@ function main() {
     }
   }
 
-  // 4. Copy plugin files
+  // 4. Migrate from legacy install path if present
+  if (fs.existsSync(LEGACY_DIR) && LEGACY_DIR !== INSTALL_DIR) {
+    fs.rmSync(LEGACY_DIR, { recursive: true, force: true });
+    console.log(`Removed legacy install at ${LEGACY_DIR}`);
+  }
+
+  // 5. Copy plugin files
   fs.mkdirSync(INSTALL_DIR, { recursive: true });
   for (const item of COPY_ITEMS) {
     const src = path.join(packageRoot, item);
@@ -120,7 +128,7 @@ function main() {
     }
   }
 
-  // 5. Generate new manifest
+  // 6. Generate new manifest
   const newManifest = {};
   for (const item of COPY_ITEMS) {
     const itemPath = path.join(INSTALL_DIR, item);
@@ -136,10 +144,10 @@ function main() {
   }
   fs.writeFileSync(manifestPath, JSON.stringify(newManifest, null, 2));
 
-  // 6. Register hooks in settings.json
+  // 7. Register hooks and plugin in settings.json
   registerHooks();
 
-  // 7. Print summary
+  // 8. Print summary
   console.log('');
   console.log(`GetShitRight v${version} installed to ${INSTALL_DIR}`);
   if (backedUp.length > 0) {
@@ -180,26 +188,23 @@ function registerHooks() {
     if (!Array.isArray(settings.hooks[hook.event])) {
       settings.hooks[hook.event] = [];
     }
-    // Purge legacy/malformed GSR entries from prior installs
+    // Purge ALL GSR entries (legacy paths, malformed, bare command) — we re-add the correct one below
     settings.hooks[hook.event] = settings.hooks[hook.event].filter((entry) => {
-      const isBareGsr = !Array.isArray(entry.hooks) &&
-        entry.command && entry.command.includes(hook.match);
-      const isMalformedGsr = Array.isArray(entry.hooks) &&
-        !('matcher' in entry) &&
-        entry.hooks.some((h) => h.command && h.command.includes(hook.match));
-      return !isBareGsr && !isMalformedGsr;
+      // Bare command (pre-0.4.1)
+      if (!Array.isArray(entry.hooks) && entry.command && entry.command.includes(hook.match)) return false;
+      // Malformed (missing matcher)
+      if (Array.isArray(entry.hooks) && !('matcher' in entry) &&
+        entry.hooks.some((h) => h.command && h.command.includes(hook.match))) return false;
+      // Valid but with any GSR path (old or new) — remove so we can re-add with correct path
+      if (Array.isArray(entry.hooks) &&
+        entry.hooks.some((h) => h.command && h.command.includes(hook.match))) return false;
+      return true;
     });
-    // Deduplicate: check inside the hooks array of each entry
-    const exists = settings.hooks[hook.event].some((entry) =>
-      Array.isArray(entry.hooks) &&
-      entry.hooks.some((h) => h.command && h.command.includes(hook.match))
-    );
-    if (!exists) {
-      settings.hooks[hook.event].push({
-        matcher: '',
-        hooks: [{ type: 'command', command: hook.command }],
-      });
-    }
+    // Add the correct entry
+    settings.hooks[hook.event].push({
+      matcher: '',
+      hooks: [{ type: 'command', command: hook.command }],
+    });
   }
 
   // --- Remove invalid keys from hooks (if present from prior installs) ---
@@ -208,9 +213,16 @@ function registerHooks() {
 
   // --- Statusline config (top-level, not inside hooks) ---
   const statuslineCommand = `node ${path.join(INSTALL_DIR, 'hooks', 'gsr-statusline.js')}`;
-  if (!settings.statusLine || !String(settings.statusLine.command || '').includes('gsr-statusline.js')) {
-    settings.statusLine = { type: 'command', command: statuslineCommand };
-  }
+  settings.statusLine = { type: 'command', command: statuslineCommand };
+
+  // --- Marketplace plugin registration ---
+  if (!settings.enabledPlugins) settings.enabledPlugins = {};
+  settings.enabledPlugins['get-shit-right@get-shit-right'] = true;
+
+  if (!settings.extraKnownMarketplaces) settings.extraKnownMarketplaces = {};
+  settings.extraKnownMarketplaces['get-shit-right'] = {
+    source: { source: 'git', url: 'https://github.com/Leading-Yam/get-shit-right.git' },
+  };
 
   fs.mkdirSync(path.dirname(SETTINGS_PATH), { recursive: true });
   fs.writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2));

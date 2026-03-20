@@ -52,7 +52,7 @@ One command. Full validation pipeline. No excuses.
 
 ## Upgrade
 
-GSR installs once to `~/.claude/get-shit-right/` and is shared across all your projects. Upgrading once applies everywhere.
+GSR installs once as a Claude Code plugin and is shared across all your projects. Upgrading once applies everywhere.
 
 **From your terminal:**
 
@@ -178,8 +178,10 @@ Inspired by [GetShitDone (GSD)](https://github.com/gsd-build/get-shit-done) — 
 ## Uninstall
 
 1. Remove hook entries containing `gsr-` from `~/.claude/settings.json`
-2. Delete `~/.claude/get-shit-right/`
-3. Delete `~/.claude/cache/gsr-update-check.json`
+2. Remove `get-shit-right` from `enabledPlugins` and `extraKnownMarketplaces` in `~/.claude/settings.json`
+3. Delete `~/.claude/plugins/marketplaces/get-shit-right/`
+4. Delete `~/.claude/get-shit-right/` (legacy path, if present)
+5. Delete `~/.claude/cache/gsr-update-check.json`
 
 ## License
 

@@ -14,7 +14,7 @@ Update the GetShitRight plugin to the latest version via npm.
 
 ## Step 1: Show Current Version
 
-Read `~/.claude/get-shit-right/VERSION` and display it:
+Read `~/.claude/plugins/marketplaces/get-shit-right/VERSION` and display it:
 
 ```
 Current version: [version from VERSION]
