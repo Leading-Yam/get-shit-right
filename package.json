@@ -1,6 +1,6 @@
 {
   "name": "get-shit-right-cc",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "GetShitRight — Evidence-backed BUILD/PIVOT/KILL decisions for SaaS ideas. Claude Code plugin.",
   "bin": {
     "get-shit-right-cc": "bin/install.js"

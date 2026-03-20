@@ -178,9 +178,9 @@ Inspired by [GetShitDone (GSD)](https://github.com/gsd-build/get-shit-done) — 
 ## Uninstall
 
 1. Remove hook entries containing `gsr-` from `~/.claude/settings.json`
-2. Remove `get-shit-right` from `enabledPlugins` and `extraKnownMarketplaces` in `~/.claude/settings.json`
-3. Delete `~/.claude/plugins/marketplaces/get-shit-right/`
-4. Delete `~/.claude/get-shit-right/` (legacy path, if present)
+2. Delete `~/.claude/commands/val/` (GSR commands)
+3. Delete `~/.claude/agents/gsr-*` (GSR agents)
+4. Delete `~/.claude/get-shit-right/` (support files)
 5. Delete `~/.claude/cache/gsr-update-check.json`
 
 ## License

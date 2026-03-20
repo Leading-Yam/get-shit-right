@@ -17,7 +17,7 @@ because they had been modified by the user.
 
 ## Step 1: Check for Patches
 
-Check if `~/.claude/plugins/marketplaces/get-shit-right/gsr-local-patches/` exists and has files.
+Check if `~/.claude/get-shit-right/gsr-local-patches/` exists and has files.
 
 If empty or missing:
 "No backed-up patches found. Your files haven't been modified during updates."
@@ -43,7 +43,7 @@ For each selected file, show the diff between the backed-up version and the curr
 ## Step 4: Restore
 
 For each confirmed file:
-1. Copy the patch file back to its original location in `~/.claude/plugins/marketplaces/get-shit-right/`
+1. Copy the patch file back to its original location in `~/.claude/get-shit-right/`
 2. Update the hash in `gsr-file-manifest.json` to match the restored file
 
 ## Step 5: Cleanup

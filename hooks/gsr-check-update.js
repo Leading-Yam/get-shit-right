@@ -10,7 +10,7 @@ const { spawn } = require('child_process');
 const HOME = os.homedir();
 const CACHE_DIR = path.join(HOME, '.claude', 'cache');
 const CACHE_FILE = path.join(CACHE_DIR, 'gsr-update-check.json');
-const VERSION_FILE = path.join(HOME, '.claude', 'plugins', 'marketplaces', 'get-shit-right', 'VERSION');
+const VERSION_FILE = path.join(HOME, '.claude', 'get-shit-right', 'VERSION');
 const COOLDOWN_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 // Check cooldown — skip if checked recently
