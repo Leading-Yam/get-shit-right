@@ -180,6 +180,15 @@ function registerHooks() {
     if (!Array.isArray(settings.hooks[hook.event])) {
       settings.hooks[hook.event] = [];
     }
+    // Purge legacy/malformed GSR entries from prior installs
+    settings.hooks[hook.event] = settings.hooks[hook.event].filter((entry) => {
+      const isBareGsr = !Array.isArray(entry.hooks) &&
+        entry.command && entry.command.includes(hook.match);
+      const isMalformedGsr = Array.isArray(entry.hooks) &&
+        !('matcher' in entry) &&
+        entry.hooks.some((h) => h.command && h.command.includes(hook.match));
+      return !isBareGsr && !isMalformedGsr;
+    });
     // Deduplicate: check inside the hooks array of each entry
     const exists = settings.hooks[hook.event].some((entry) =>
       Array.isArray(entry.hooks) &&
@@ -193,8 +202,9 @@ function registerHooks() {
     }
   }
 
-  // --- Remove invalid Statusline key from hooks (if present from prior installs) ---
+  // --- Remove invalid keys from hooks (if present from prior installs) ---
   delete settings.hooks.Statusline;
+  delete settings.hooks.Notification;
 
   // --- Statusline config (top-level, not inside hooks) ---
   const statuslineCommand = `node ${path.join(INSTALL_DIR, 'hooks', 'gsr-statusline.js')}`;

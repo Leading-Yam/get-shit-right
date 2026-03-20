@@ -5,6 +5,17 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] — 2026-03-20
+
+### Fixed
+
+- **Legacy hook cleanup** — installer now purges malformed GSR entries from prior installs (bare `{ command }` objects and entries missing `matcher` key) that caused `Expected array, but received undefined` on SessionStart
+- **Stale Notification hook** — installer removes legacy `Notification` hook key left by pre-0.4.1 installs
+
+### Changed
+
+- **README** — added Upgrade section explaining single-install-all-projects behavior; pinned `@latest` tag in install command
+
 ## [0.4.1] — 2026-03-20
 
 ### Fixed

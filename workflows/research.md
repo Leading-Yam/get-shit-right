@@ -21,8 +21,9 @@ Check for existing research artifacts (overwrite protection).
 Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
 - If it succeeds: set tool_context to "Use `mcp__firecrawl__search` for discovery and `mcp__firecrawl__scrape` for deep content extraction."
-- If it fails (tool not found): set tool_context to "Use `WebSearch` for discovery and `WebFetch` for content extraction. Firecrawl is not available. Note in output when content extraction relied on WebFetch."
-- Display tool status to founder. Continue either way — never abort.
+- If it fails (tool not found, error, or timeout): set tool_context to "Use `WebSearch` for discovery and `WebFetch` for content extraction."
+
+**CRITICAL: Firecrawl is optional. You MUST continue with WebSearch/WebFetch if Firecrawl is unavailable. NEVER abort, block, or ask the user to install Firecrawl. Proceed to Step 3 immediately.**
 
 ## Step 3: Read Memory
 

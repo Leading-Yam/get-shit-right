@@ -39,7 +39,7 @@ GetShitRight is a free, open-source tool for Claude Code that forces you to vali
 ## Install
 
 ```bash
-npx get-shit-right-cc
+npx get-shit-right-cc@latest
 ```
 
 Then:
@@ -49,6 +49,24 @@ Then:
 ```
 
 One command. Full validation pipeline. No excuses.
+
+## Upgrade
+
+GSR installs once to `~/.claude/get-shit-right/` and is shared across all your projects. Upgrading once applies everywhere.
+
+**From your terminal:**
+
+```bash
+npx get-shit-right-cc@latest
+```
+
+**From within Claude Code:**
+
+```
+/val:update
+```
+
+No per-project action needed. Restart Claude Code after upgrading.
 
 ## What Happens When You Run It
 

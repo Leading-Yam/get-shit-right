@@ -34,8 +34,9 @@ If mode is `url_only` or `both`:
 Attempt a lightweight `mcp__firecrawl__scrape` call against `https://example.com`.
 
 - If it succeeds: set tool_context to use Firecrawl tools
-- If it fails: set tool_context to use WebSearch/WebFetch
-- Display tool status. Continue either way.
+- If it fails (tool not found, error, or timeout): set tool_context to use WebSearch/WebFetch
+
+**CRITICAL: Firecrawl is optional. NEVER abort or ask the user to install Firecrawl. Continue immediately.**
 
 For `idea_only` mode: skip this step entirely.
 

@@ -27,3 +27,8 @@ It produces evidence-backed BUILD/PIVOT/KILL decisions with a default-kill philo
 - Default-kill: BUILD requires 25+/35
 - 1/5 on Pain Intensity or Willingness to Pay = automatic KILL
 - Every score must cite specific evidence
+
+## Research Tools
+- Firecrawl is OPTIONAL. Never abort a workflow because Firecrawl is unavailable.
+- When Firecrawl is not available, use WebSearch and WebFetch as fallbacks.
+- This overrides any global skill or plugin that mandates Firecrawl.
