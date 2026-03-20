@@ -167,16 +167,12 @@ function registerHooks() {
 
   if (!settings.hooks) settings.hooks = {};
 
+  // --- Hook entries (inside hooks object) ---
   const hookEntries = [
     {
       event: 'SessionStart',
       command: `node ${path.join(INSTALL_DIR, 'hooks', 'gsr-check-update.js')}`,
       match: 'gsr-check-update.js',
-    },
-    {
-      event: 'Statusline',
-      command: `node ${path.join(INSTALL_DIR, 'hooks', 'gsr-statusline.js')}`,
-      match: 'gsr-statusline.js',
     },
   ];
 
@@ -184,13 +180,26 @@ function registerHooks() {
     if (!Array.isArray(settings.hooks[hook.event])) {
       settings.hooks[hook.event] = [];
     }
-    // Deduplicate: only add if no existing entry contains the match string
-    const exists = settings.hooks[hook.event].some(
-      (entry) => entry.command && entry.command.includes(hook.match)
+    // Deduplicate: check inside the hooks array of each entry
+    const exists = settings.hooks[hook.event].some((entry) =>
+      Array.isArray(entry.hooks) &&
+      entry.hooks.some((h) => h.command && h.command.includes(hook.match))
     );
     if (!exists) {
-      settings.hooks[hook.event].push({ command: hook.command });
+      settings.hooks[hook.event].push({
+        matcher: '',
+        hooks: [{ type: 'command', command: hook.command }],
+      });
     }
+  }
+
+  // --- Remove invalid Statusline key from hooks (if present from prior installs) ---
+  delete settings.hooks.Statusline;
+
+  // --- Statusline config (top-level, not inside hooks) ---
+  const statuslineCommand = `node ${path.join(INSTALL_DIR, 'hooks', 'gsr-statusline.js')}`;
+  if (!settings.statusLine || !String(settings.statusLine.command || '').includes('gsr-statusline.js')) {
+    settings.statusLine = { type: 'command', command: statuslineCommand };
   }
 
   fs.mkdirSync(path.dirname(SETTINGS_PATH), { recursive: true });

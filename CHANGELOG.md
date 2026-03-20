@@ -5,6 +5,15 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] — 2026-03-20
+
+### Fixed
+
+- **Install hook registration** — `registerHooks()` now writes the correct `{ matcher, hooks: [{ type, command }] }` structure instead of bare `{ command }` objects, which caused `Expected array, but received undefined` on SessionStart
+- **Invalid Statusline hook key** — Statusline is now registered as top-level `statusLine` config instead of inside `hooks` (which is not a valid hook event)
+- **Hook deduplication** — dedup logic now checks inside nested `entry.hooks[].command` instead of `entry.command`
+- **Cleanup of prior bad installs** — installer now removes stale `Statusline` key from `hooks` if left by previous versions
+
 ## [0.4.0] — 2026-03-19
 
 ### Architecture: Thin Agent, Heavy Tools
