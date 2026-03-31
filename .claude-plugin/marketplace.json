@@ -1,19 +1,16 @@
 {
   "name": "get-shit-right",
   "owner": {
-    "name": "Leading Yam"
+    "name": "Eden Tan",
+    "url": "https://github.com/Leading-Yam"
   },
   "plugins": [
     {
-      "name": "get-shit-right",
-      "source": {
-        "source": "github",
-        "repo": "Leading-Yam/get-shit-right"
-      },
+      "name": "gsr",
       "description": "Validate SaaS ideas before code is written. Evidence-backed BUILD/PIVOT/KILL decisions with default-kill philosophy.",
-      "version": "0.1.0",
+      "version": "0.5.0",
       "license": "MIT",
-      "keywords": ["validation", "saas", "ideas", "solo-founder"]
+      "source": "./"
     }
   ]
 }
