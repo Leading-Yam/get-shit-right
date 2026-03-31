@@ -1,18 +1,18 @@
-# GetShitRight — Project Rules
+# GetShitRight — Plugin Rules
 
 ## What This Is
 GetShitRight (GSR) is a Claude Code plugin that validates SaaS ideas before code is written.
 It produces evidence-backed BUILD/PIVOT/KILL decisions with a default-kill philosophy.
 
 ## Architecture
-- `commands/val/` — Slash command definitions (`/val:*`)
+- `skills/` — Skill definitions (`/gsr:*`), each with co-located workflow files
 - `agents/` — Specialized agent definitions (`gsr-*`)
-- `workflows/` — Implementation logic delegated from commands
-- `templates/` — Canonical output format references for contributors
+- `templates/` — Canonical output format references read by workflows at write-time
 
 ## Conventions
-- Commands use YAML frontmatter with `name`, `description`, `allowed-tools`
-- Commands delegate to workflow files via `<execution_context>` references
+- Skills use YAML frontmatter with `name`, `description`, `allowed-tools`
+- Skill names omit prefix — the plugin system namespaces them as `gsr:<name>`
+- Each skill directory contains a `SKILL.md` plus `*-workflow.md` files referenced via `@`
 - Agents use XML-like sections: `<role>`, `<behavior>`, `<output_format>`
 - All agent output must cite sources or explicitly mark assumptions
 - Confidence levels: High / Medium / Low on every finding
