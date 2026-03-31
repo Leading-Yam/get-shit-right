@@ -25,7 +25,7 @@ Check two things:
 | No | No | **Error** |
 
 If neither exists, abort with:
-"Provide a competitor URL as an argument, or run `/val:idea` first to capture your idea."
+"Provide a competitor URL as an argument, or run `/gsr:idea` first to capture your idea."
 
 ## Step 3: Detect Research Tools (URL modes only)
 
@@ -104,8 +104,8 @@ Do NOT update `Entry Point` — skew is supplementary.
 ## Step 10: Next Steps
 
 Based on current state:
-- If no IDEA.md: "Next: Run `/val:idea` or `/val:reverse`."
-- If IDEA.md but no RESEARCH.md: "Next: Run `/val:research`."
-- If both exist: "Next: Run `/val:score`."
+- If no IDEA.md: "Next: Run `/gsr:idea` or `/gsr:reverse`."
+- If IDEA.md but no RESEARCH.md: "Next: Run `/gsr:research`."
+- If both exist: "Next: Run `/gsr:score`."
 
 </process>

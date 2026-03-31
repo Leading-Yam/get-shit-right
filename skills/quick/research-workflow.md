@@ -11,7 +11,7 @@ Detects tools, injects memory, validates output, and merges results.
 Follow @workflows/state.md to ensure `.validation/STATE.md` exists.
 
 Check for `.validation/IDEA.md`:
-- If it does not exist: fail with "Run `/val:idea` or `/val:reverse` first to capture your idea."
+- If it does not exist: fail with "Run `/gsr:idea` or `/gsr:reverse` first to capture your idea."
 - If it exists: proceed
 
 Check for existing research artifacts (overwrite protection).
@@ -142,6 +142,6 @@ Update `.validation/STATE.md`:
 
 "Research complete. Results in `.validation/RESEARCH.md` and `.validation/COMPETITORS.md`.
 
-Next: Run `/val:score` for the viability scorecard."
+Next: Run `/gsr:score` for the viability scorecard."
 
 </process>

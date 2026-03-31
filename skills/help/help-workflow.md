@@ -24,30 +24,28 @@ Output the following to the user:
 
 | Command | What It Does |
 |---------|-------------|
-| `/val:idea` | Interview to capture & structure your idea |
-| `/val:reverse` | Reverse engineer a competitor to find spin-off angles |
-| `/val:skew` | Analyze value delivery to find 10x skew opportunities |
-| `/val:research` | Parallel market research (pain, competitors, market size) |
-| `/val:score` | Evidence-based viability scorecard (default-kill) |
-| `/val:decide` | Final BUILD / PIVOT / KILL verdict |
-| `/val:quick` | Full pipeline in one command |
-| `/val:help` | This help screen |
-| `/val:update` | Update to the latest version |
-| `/val:reapply-patches` | Recover files backed up during updates |
+| `/gsr:idea` | Interview to capture & structure your idea |
+| `/gsr:reverse` | Reverse engineer a competitor to find spin-off angles |
+| `/gsr:skew` | Analyze value delivery to find 10x skew opportunities |
+| `/gsr:research` | Parallel market research (pain, competitors, market size) |
+| `/gsr:score` | Evidence-based viability scorecard (default-kill) |
+| `/gsr:decide` | Final BUILD / PIVOT / KILL verdict |
+| `/gsr:quick` | Full pipeline in one command |
+| `/gsr:help` | This help screen |
 
 ## Recommended Flows
 
 **"I have an idea"**
-`/val:idea` → `/val:research` → `/val:score` → `/val:decide`
+`/gsr:idea` → `/gsr:research` → `/gsr:score` → `/gsr:decide`
 
 **"I have a competitor I want to beat"**
-`/val:reverse` → `/val:research` → `/val:score` → `/val:decide`
+`/gsr:reverse` → `/gsr:research` → `/gsr:score` → `/gsr:decide`
 
 **"Just do everything"**
-`/val:quick`
+`/gsr:quick`
 
 **"I want to find leverage"** (Optional, use alongside any flow)
-`/val:skew` or `/val:skew <competitor URL>`
+`/gsr:skew` or `/gsr:skew <competitor URL>`
 
 ## Better Research (Optional)
 
@@ -73,7 +71,7 @@ Soft validators (coverage, confidence calibration) surface flags for you to revi
 ## Current Progress
 
 [If STATE.md exists: show step checklist with dates]
-[If no STATE.md: "No validation in progress. Run `/val:idea` or `/val:reverse` to start."]
+[If no STATE.md: "No validation in progress. Run `/gsr:idea` or `/gsr:reverse` to start."]
 
 ---
 

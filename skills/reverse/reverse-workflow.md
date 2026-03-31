@@ -110,6 +110,6 @@ Update `.validation/STATE.md`:
 "Your reverse analysis is in `.validation/REVERSE-ANALYSIS.md` and the selected angle
 is captured in `.validation/IDEA.md`.
 
-Next: Run `/val:research` to validate this angle, or `/val:quick` to run the full pipeline."
+Next: Run `/gsr:research` to validate this angle, or `/gsr:quick` to run the full pipeline."
 
 </process>

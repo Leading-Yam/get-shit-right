@@ -10,10 +10,10 @@ Injects advisory scoring framework and memory. Validates output.
 Follow @workflows/state.md.
 
 Check for `.validation/IDEA.md`:
-- If missing: fail with "Run `/val:idea` or `/val:reverse` first."
+- If missing: fail with "Run `/gsr:idea` or `/gsr:reverse` first."
 
 Check for `.validation/RESEARCH.md`:
-- If missing: warn "No research data found. The judge will score with limited evidence — research-dependent assessments will be less confident. Run `/val:research` first for better results."
+- If missing: warn "No research data found. The judge will score with limited evidence — research-dependent assessments will be less confident. Run `/gsr:research` first for better results."
 - Proceed anyway.
 
 Check for existing SCORECARD.md (overwrite protection).
@@ -91,9 +91,9 @@ Update `.validation/STATE.md`:
 ## Step 9: Next Steps
 
 If recommendation is BUILD or PIVOT:
-"Run `/val:decide` for the full verdict with specific next steps."
+"Run `/gsr:decide` for the full verdict with specific next steps."
 
 If recommendation is KILL:
-"Run `/val:decide` for the full verdict — it will include alternative angles worth exploring."
+"Run `/gsr:decide` for the full verdict — it will include alternative angles worth exploring."
 
 </process>

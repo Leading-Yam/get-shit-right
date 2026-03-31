@@ -7,7 +7,7 @@ Called by all commands to track workflow progress.
 
 ## Initializing State
 
-When any `/val:*` command runs and `.validation/STATE.md` does not exist:
+When any `/gsr:*` command runs and `.validation/STATE.md` does not exist:
 
 1. Create `.validation/` directory if it doesn't exist
 2. Copy the STATE.md template to `.validation/STATE.md`
@@ -62,7 +62,7 @@ When a command would overwrite an existing `.validation/` artifact:
 
 ## Multi-Idea Guard
 
-When any `/val:*` command starts and `.validation/STATE.md` shows `Current Status: COMPLETE`:
+When any `/gsr:*` command starts and `.validation/STATE.md` shows `Current Status: COMPLETE`:
 
 1. Warn: "A completed validation exists. Delete `.validation/` to start fresh, or use git to branch."
 2. Wait for confirmation before proceeding

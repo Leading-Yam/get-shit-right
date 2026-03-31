@@ -11,7 +11,7 @@ Uses reasoned judgment — thresholds are advisory.
 Follow @workflows/state.md.
 
 Check for `.validation/IDEA.md`:
-- If missing: fail with "Run `/val:idea` or `/val:reverse` first."
+- If missing: fail with "Run `/gsr:idea` or `/gsr:reverse` first."
 
 Check for `.validation/SCORECARD.md`:
 - If missing: warn "No scorecard found. Running inline scoring first..."

@@ -60,6 +60,6 @@ Update `.validation/STATE.md`:
 
 "Your idea is captured in `.validation/IDEA.md`.
 
-Next: Run `/val:research` to research the market, or `/val:quick` to run the full pipeline."
+Next: Run `/gsr:research` to research the market, or `/gsr:quick` to run the full pipeline."
 
 </process>

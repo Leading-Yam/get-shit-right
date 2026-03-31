@@ -1,6 +1,6 @@
 <purpose>
 Run the full validation pipeline in one command: idea → research → score → decide.
-Detects existing IDEA.md from /val:reverse and offers to continue.
+Detects existing IDEA.md from /gsr:reverse and offers to continue.
 Each sub-workflow handles its own tool detection, memory, and validation.
 </purpose>
 
