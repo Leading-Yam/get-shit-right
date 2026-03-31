@@ -5,6 +5,32 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] — 2026-03-31
+
+### Breaking
+- Command prefix changed from `/val:*` to `/gsr:*`
+- Installation changed from `npx get-shit-right-cc` to `claude plugin install gsr`
+- Removed `/val:update` and `/val:reapply-patches` (plugin system handles updates natively)
+
+### Added
+- Native Claude Code plugin format (`.claude-plugin/`, `skills/`)
+- Workflow files co-located inside each skill directory for reliable `@` resolution
+- Legacy cleanup instructions for npx users
+
+### Removed
+- `bin/install.js` — npx installer
+- `commands/` directory — replaced by `skills/`
+- `workflows/` directory — content moved into skill directories
+- `hooks/` directory — plugin system handles updates and statusline
+- `validators/` directory — not part of plugin format
+- `memory/` directory — project-internal, not shipped
+- `docs/` directory — project-internal, not shipped in plugin
+
+### Changed
+- `CLAUDE.md` rewritten for plugin context
+- `README.md` updated with plugin install instructions
+- `package.json` stripped to metadata only (no bin/files)
+
 ## [0.4.4] — 2026-03-20
 
 ### Fixed
