@@ -27,7 +27,7 @@
 [Specific pivot direction with reasoning]
 
 ### Suggested Re-run
-"Update your IDEA.md with the pivot and re-run /val:research"
+"Update your IDEA.md with the pivot and re-run /gsr:research"
 
 ## If KILL:
 

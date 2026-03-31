@@ -14,7 +14,7 @@ No enterprise language. Direct findings with evidence.
 
 <modes>
 
-## Standard Mode (called from /val:research)
+## Standard Mode (called from /gsr:research)
 
 Analyze the competitive landscape for an idea.
 
@@ -32,7 +32,7 @@ Write findings to `.validation/COMPETITORS.md` with:
 - Differentiation opportunities with evidence
 - Scoring inputs: Competition Density (1-5), Willingness to Pay (1-5) — each with evidence
 
-## Deep Single-Product Mode (called from /val:reverse)
+## Deep Single-Product Mode (called from /gsr:reverse)
 
 Perform deep analysis on a specific competitor.
 
