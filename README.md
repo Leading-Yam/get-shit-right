@@ -39,41 +39,27 @@ GetShitRight is a free, open-source tool for Claude Code that forces you to vali
 ## Install
 
 ```bash
-npx get-shit-right-cc@latest
+claude plugin install gsr --marketplace https://github.com/Leading-Yam/get-shit-right.git
 ```
 
 Then:
 
 ```
-/val:quick
+/gsr:quick
 ```
 
 One command. Full validation pipeline. No excuses.
 
 ## Upgrade
 
-GSR installs once as a Claude Code plugin and is shared across all your projects. Upgrading once applies everywhere.
-
-**From your terminal:**
-
-```bash
-npx get-shit-right-cc@latest
-```
-
-**From within Claude Code:**
-
-```
-/val:update
-```
-
-No per-project action needed. Restart Claude Code after upgrading.
+Automatic on session start. No user action needed.
 
 ## What Happens When You Run It
 
 **1. It interviews you** (6 questions max — it respects your time, even if it won't respect your feelings)
 
 ```
-/val:idea
+/gsr:idea
 ```
 
 Captures your idea, target customer, and riskiest assumptions. Don't know the answer? Say "Surprise me" and it'll make a smart assumption instead of blocking you.
@@ -81,7 +67,7 @@ Captures your idea, target customer, and riskiest assumptions. Don't know the an
 **2. It researches your market** with 3 parallel AI agents
 
 ```
-/val:research
+/gsr:research
 ```
 
 - **Pain validation** — Reddit, HN, Indie Hackers, Twitter/X
@@ -91,7 +77,7 @@ Captures your idea, target customer, and riskiest assumptions. Don't know the an
 **3. It scores your idea honestly**
 
 ```
-/val:score
+/gsr:score
 ```
 
 7 dimensions, each 1-5. Default-kill philosophy: BUILD is hard to earn. The judge reasons through evidence, not formulas — a low score on one dimension can be overridden if another is exceptionally strong. But Pain Intensity at 1/5 is a loud signal you shouldn't ignore.
@@ -99,7 +85,7 @@ Captures your idea, target customer, and riskiest assumptions. Don't know the an
 **4. It delivers a verdict**
 
 ```
-/val:decide
+/gsr:decide
 ```
 
 **BUILD**, **PIVOT**, or **KILL** — with specific next steps for each.
@@ -110,21 +96,19 @@ KILL verdicts always include alternative angles worth exploring. You're redirect
 
 | Command | What It Does |
 |---------|-------------|
-| `/val:idea` | Interview to capture & structure your idea |
-| `/val:reverse` | Reverse engineer a competitor to find spin-off angles |
-| `/val:skew` | Analyze value delivery to find 10x skew opportunities |
-| `/val:research` | Parallel market research (pain, competitors, market size) |
-| `/val:score` | Evidence-based viability scorecard |
-| `/val:decide` | Final BUILD / PIVOT / KILL verdict |
-| `/val:quick` | Full pipeline in one command |
-| `/val:help` | Usage guide & current progress |
-| `/val:update` | Update to the latest version |
-| `/val:reapply-patches` | Recover files backed up during updates |
+| `/gsr:idea` | Interview to capture & structure your idea |
+| `/gsr:reverse` | Reverse engineer a competitor to find spin-off angles |
+| `/gsr:skew` | Analyze value delivery to find 10x skew opportunities |
+| `/gsr:research` | Parallel market research (pain, competitors, market size) |
+| `/gsr:score` | Evidence-based viability scorecard |
+| `/gsr:decide` | Final BUILD / PIVOT / KILL verdict |
+| `/gsr:quick` | Full pipeline in one command |
+| `/gsr:help` | Usage guide & current progress |
 
 ### Start from a competitor instead
 
 ```
-/val:reverse "Calendly"
+/gsr:reverse "Calendly"
 ```
 
 Deep-dive a competitor's weaknesses and find underserved angles. Pick a spin-off direction and validate it.
@@ -144,7 +128,7 @@ Works without it. Better with it.
 Inspired by [GetShitDone (GSD)](https://github.com/gsd-build/get-shit-done) — the planning and execution engine for Claude Code. If you use GSD, a BUILD verdict generates `CONSTRAINTS.md` that GSD reads directly:
 
 ```
-/val:decide  →  .validation/CONSTRAINTS.md  →  /gsd:new-project
+/gsr:decide  →  .validation/CONSTRAINTS.md  →  /gsd:new-project
 ```
 
 **GetShitRight validates. GetShitDone builds.** No manual copy-paste between them.
@@ -177,11 +161,19 @@ Inspired by [GetShitDone (GSD)](https://github.com/gsd-build/get-shit-done) — 
 
 ## Uninstall
 
+```bash
+claude plugin uninstall gsr
+```
+
+## Legacy Cleanup (npx users before v0.5.0)
+
+If you previously installed via `npx get-shit-right-cc`:
+
 1. Remove hook entries containing `gsr-` from `~/.claude/settings.json`
-2. Delete `~/.claude/commands/val/` (GSR commands)
-3. Delete `~/.claude/agents/gsr-*` (GSR agents)
-4. Delete `~/.claude/get-shit-right/` (support files)
-5. Delete `~/.claude/cache/gsr-update-check.json`
+2. `rm -rf ~/.claude/commands/val/`
+3. `rm -f ~/.claude/agents/gsr-*`
+4. `rm -rf ~/.claude/get-shit-right/`
+5. `rm -f ~/.claude/cache/gsr-update-check.json`
 
 ## License
 
