@@ -1,5 +1,5 @@
 ---
-name: decide
+name: gsr:decide
 description: Final BUILD / PIVOT / KILL verdict with specific next steps
 allowed-tools:
   - Read

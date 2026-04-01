@@ -1,5 +1,5 @@
 ---
-name: score
+name: gsr:score
 description: Evidence-based viability scorecard with default-kill philosophy
 allowed-tools:
   - Read

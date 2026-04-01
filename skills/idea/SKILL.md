@@ -1,5 +1,5 @@
 ---
-name: idea
+name: gsr:idea
 description: Interview to capture & structure your SaaS idea
 allowed-tools:
   - Read

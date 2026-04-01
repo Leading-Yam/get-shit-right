@@ -1,5 +1,5 @@
 ---
-name: reverse
+name: gsr:reverse
 description: Reverse engineer a competitor to find spin-off angles
 argument-hint: "<competitor name, URL, or app store link>"
 allowed-tools:

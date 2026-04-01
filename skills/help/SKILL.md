@@ -1,5 +1,5 @@
 ---
-name: help
+name: gsr:help
 description: Show available commands, recommended flows, and current validation state
 allowed-tools:
   - Read

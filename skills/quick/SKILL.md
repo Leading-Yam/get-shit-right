@@ -1,5 +1,5 @@
 ---
-name: quick
+name: gsr:quick
 description: Full validation pipeline in one command — idea, research, score, decide
 allowed-tools:
   - Read

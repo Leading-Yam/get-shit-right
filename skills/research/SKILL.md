@@ -1,5 +1,5 @@
 ---
-name: research
+name: gsr:research
 description: Parallel market research — pain validation, competitors, market sizing
 allowed-tools:
   - Read

@@ -1,5 +1,5 @@
 ---
-name: skew
+name: gsr:skew
 description: Analyze value delivery to find 10x skew opportunities
 argument-hint: "<optional competitor URL>"
 allowed-tools:
