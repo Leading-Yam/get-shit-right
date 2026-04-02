@@ -5,6 +5,14 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] — 2026-04-02
+
+### Fixed
+- **CLAUDE.md doc skew** — conventions section incorrectly stated skill names should omit the plugin prefix; corrected to require `name: gsr:<skillname>` for autocomplete discovery
+
+### Added
+- `docs/solutions/integration-issues/skill-metadata-prefix-plugin-discovery.md` — compound solution doc for the skill naming fix
+
 ## [0.5.0] — 2026-03-31
 
 ### Breaking

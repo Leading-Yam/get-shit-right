@@ -1,6 +1,6 @@
 {
   "name": "gsr",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Validate SaaS ideas before code is written. Evidence-backed BUILD/PIVOT/KILL decisions with default-kill philosophy.",
   "author": {
     "name": "Eden Tan",
