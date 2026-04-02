@@ -11,7 +11,7 @@ It produces evidence-backed BUILD/PIVOT/KILL decisions with a default-kill philo
 
 ## Conventions
 - Skills use YAML frontmatter with `name`, `description`, `allowed-tools`
-- Skill names omit prefix — the plugin system namespaces them as `gsr:<name>`
+- Skill `name` field must include the plugin prefix (e.g., `name: gsr:idea`) for autocomplete discovery
 - Each skill directory contains a `SKILL.md` plus `*-workflow.md` files referenced via `@`
 - Agents use XML-like sections: `<role>`, `<behavior>`, `<output_format>`
 - All agent output must cite sources or explicitly mark assumptions
