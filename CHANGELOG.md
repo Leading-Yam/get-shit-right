@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.6.0] — 2026-04-12
 
+GSR now learns from reality. This release adds the Outcome Ledger: a local, private history of what actually happened after past BUILD / PIVOT / KILL calls. Once you’ve logged a few outcomes, future `/gsr:score` runs use that history to calibrate the judge with evidence-cited personal priors.
+
+In plain English: GSR no longer just gives verdicts. It starts learning whether those verdicts were right.
+
 ### Added
 - **Outcome ledger** — new user-global `~/.gsr/outcomes.md` ledger tracks pending and resolved BUILD/PIVOT/KILL verdict outcomes with the locked 6-field schema.
 - **`/gsr:outcome` skill** — resolves pending verdicts interactively or headlessly (`slug=... status=... lesson=...`) for agent-native workflows.
