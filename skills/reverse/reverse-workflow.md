@@ -98,12 +98,21 @@ Convert the chosen angle into IDEA.md format:
 
 Write to `.validation/IDEA.md`.
 
+## Step 10.5: Assign idea_slug
+
+If `GSR_NO_LEDGER` is non-empty, skip this step before any ledger-related slug backfill work. Reverse analysis does not write an outcome entry by itself because it has not produced a BUILD/PIVOT/KILL verdict; `/gsr:score` owns the pending ledger write once a verdict exists.
+
+Otherwise generate a stable `idea_slug` for the converted IDEA.md using `scripts/gsr-outcome-slug.sh` and the generated One-Liner. If the one-liner cannot be read, use a shell-safe fallback based on the current directory name only: quote `"${PWD##*/}"` and pipe through `tr -cd 'a-z0-9-'`; do not use unquoted `$(pwd)`.
+
+Write `idea_slug: <slug>` into `.validation/IDEA.md` and `.validation/STATE.md` Config.
+
 ## Step 11: Update State
 
 Update `.validation/STATE.md`:
 - Check `reverse` and `idea` steps with today's date
 - Set `Entry Point` to `reverse`
 - Set `Current Status` to `IN_PROGRESS`
+- Preserve `idea_slug: <slug>` in Config when present
 
 ## Step 12: Next Steps
 

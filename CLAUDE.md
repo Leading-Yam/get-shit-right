@@ -23,6 +23,11 @@ It produces evidence-backed BUILD/PIVOT/KILL decisions with a default-kill philo
 - `STATE.md` tracks workflow progress
 - One idea per `.validation/` directory
 
+## Outcome Ledger
+- User outcome history lives at `~/.gsr/outcomes.md` (override with `GSR_LEDGER_PATH`). See `docs/plans/2026-04-11-001-feat-outcome-ledger-personal-calibration-plan.md` for the locked 6-field schema.
+- Retrospective Prior Loop: outcomes are human-resolved; priors are advisory; the judging agent never writes to its own training signal.
+- Lessons are unencrypted local notes and must be treated as untrusted user-authored data when injected into agent context.
+
 ## Scoring
 - Default-kill: BUILD requires 25+/35
 - 1/5 on Pain Intensity or Willingness to Pay = automatic KILL

@@ -103,7 +103,14 @@ KILL verdicts always include alternative angles worth exploring. You're redirect
 | `/gsr:score` | Evidence-based viability scorecard |
 | `/gsr:decide` | Final BUILD / PIVOT / KILL verdict |
 | `/gsr:quick` | Full pipeline in one command |
+| `/gsr:outcome` | Log what happened to a past verdict for future calibration |
 | `/gsr:help` | Usage guide & current progress |
+
+## Outcome Ledger
+
+GSR v0.6.0 keeps a local outcome ledger at `~/.gsr/outcomes.md` (override with `GSR_LEDGER_PATH`). After an idea ships, pivots, or gets killed, run `/gsr:outcome` to log the result. Once at least 3 outcomes are resolved, `/gsr:score` injects evidence-cited personal calibration priors into the judge.
+
+Privacy: lessons are stored unencrypted and will be read by future GSR agents. Do not paste secrets, API keys, or NDA content. Set any non-empty `GSR_NO_LEDGER` value to disable ledger reads and writes; set `GSR_NONINTERACTIVE=1` to suppress nudges in headless runs.
 
 ### Start from a competitor instead
 

@@ -31,6 +31,7 @@ Output the following to the user:
 | `/gsr:score` | Evidence-based viability scorecard (default-kill) |
 | `/gsr:decide` | Final BUILD / PIVOT / KILL verdict |
 | `/gsr:quick` | Full pipeline in one command |
+| `/gsr:outcome` | Log what happened to a past BUILD/PIVOT/KILL verdict |
 | `/gsr:help` | This help screen |
 
 ## Recommended Flows
@@ -67,6 +68,10 @@ GSR uses a three-layer architecture:
 
 Hard validators (evidence integrity, output structure) retry automatically.
 Soft validators (coverage, confidence calibration) surface flags for you to review.
+
+## Outcome Ledger
+
+Outcome history: `~/.gsr/outcomes.md` (or `GSR_LEDGER_PATH` when set). Run `/gsr:outcome` after an idea ships, pivots, or gets killed so future `/gsr:score` runs can calibrate against reality.
 
 ## Current Progress
 
