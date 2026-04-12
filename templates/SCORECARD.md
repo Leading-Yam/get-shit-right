@@ -13,6 +13,9 @@
 | Build Complexity | X/5 | [H/M/L] | [cited evidence] |
 | Distribution Clarity | X/5 | [H/M/L] | [cited evidence] |
 
+## Personal Calibration Applied
+[If calibration notes were present, cite the exact prior slug(s) that influenced reasoning. If absent, omit this section.]
+
 ## Red Flags
 - [Flag with evidence]
 

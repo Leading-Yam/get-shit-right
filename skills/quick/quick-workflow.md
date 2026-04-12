@@ -11,6 +11,10 @@ Each sub-workflow handles its own tool detection, memory, and validation.
 Follow @workflows/state.md to ensure `.validation/STATE.md` exists.
 Check for completed validation (multi-idea guard).
 
+## Step 1.5: Outcome Nudge
+
+If `GSR_NO_LEDGER` is non-empty, skip this step before any ledger file I/O. If `GSR_NONINTERACTIVE` is non-empty, suppress the nudge entirely. Otherwise run `scripts/gsr-outcome-nudge.sh` and display its one-line reminder if it emits one. Do not block the quick workflow on the nudge.
+
 ## Step 2: Check for Existing IDEA.md
 
 If `.validation/IDEA.md` exists:

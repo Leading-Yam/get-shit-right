@@ -1,5 +1,7 @@
 # Idea: [Name]
 
+idea_slug: [YYYY-MM-DD-sanitized-kebab-abc123]
+
 ## One-Liner
 [Product does X for Y so they can Z]
 

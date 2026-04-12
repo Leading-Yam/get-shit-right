@@ -4,6 +4,7 @@ description: Final BUILD / PIVOT / KILL verdict with specific next steps
 allowed-tools:
   - Read
   - Write
+  - Bash
   - Glob
   - Agent
 ---

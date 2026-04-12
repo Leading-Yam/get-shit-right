@@ -8,7 +8,7 @@
     {
       "name": "gsr",
       "description": "Validate SaaS ideas before code is written. Evidence-backed BUILD/PIVOT/KILL decisions with default-kill philosophy.",
-      "version": "0.5.1",
+      "version": "0.6.0",
       "license": "MIT",
       "source": "./"
     }

@@ -14,3 +14,4 @@
 ## Entry Point: pending
 
 ## Config
+idea_slug: pending

@@ -5,6 +5,30 @@ All notable changes to GetShitRight will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] — 2026-04-12
+
+GSR now learns from reality. This release adds the Outcome Ledger: a local, private history of what actually happened after past BUILD / PIVOT / KILL calls. Once you’ve logged a few outcomes, future `/gsr:score` runs use that history to calibrate the judge with evidence-cited personal priors.
+
+In plain English: GSR no longer just gives verdicts. It starts learning whether those verdicts were right.
+
+### Added
+- **Outcome ledger** — new user-global `~/.gsr/outcomes.md` ledger tracks pending and resolved BUILD/PIVOT/KILL verdict outcomes with the locked 6-field schema.
+- **`/gsr:outcome` skill** — resolves pending verdicts interactively or headlessly (`slug=... status=... lesson=...`) for agent-native workflows.
+- **Personal calibration loop** — new `gsr-calibrator` agent turns deterministic ledger digests into cited priors (`Prior: ... Evidence: ... Confidence: H|M|L`) for `/gsr:score` once at least 3 outcomes are resolved.
+- **Stable `idea_slug`** — IDEA and STATE templates now include a deterministic slug (`YYYY-MM-DD-<sanitized-kebab>-<sha256(one_liner+timestamp)[:6]>`) for verdict-to-outcome linkage.
+- **Workflow parity check** — `scripts/check-workflow-parity.sh` prevents drift across the three byte-identical score workflow mirrors.
+
+### Security and Privacy
+- **Untrusted lesson handling** — ledger excerpts are wrapped in `<untrusted_user_notes>` with a distrust preamble before calibrator/judge injection; lessons are stripped of control characters and truncated to 200 characters.
+- **Ledger opt-out** — any non-empty `GSR_NO_LEDGER` value disables ledger reads, writes, digest generation, nudge scans, and pending writes. `GSR_NO_LEDGER=0` and `GSR_NO_LEDGER=false` also disable; unset to re-enable.
+- **Headless safety** — `GSR_NONINTERACTIVE=1` suppresses the 60-day nudge and requires argument-based `/gsr:outcome` resolution.
+- **Ledger path override** — `GSR_LEDGER_PATH=<path>` overrides `~/.gsr/outcomes.md`, primarily for tests and locked-down home directories.
+- **Filesystem hardening** — ledger helper scripts refuse symlinked ledger paths, refuse world-writable ledger files, create with `umask 077`, and enforce `chmod 600`.
+
+### Notes
+- Lessons are stored unencrypted in `~/.gsr/outcomes.md` and will be read by future GSR agents. Do not paste secrets, API keys, or NDA content.
+- Retrospective Prior Loop invariant: outcomes are human-resolved; priors are advisory; the judging agent never writes to its own training signal.
+
 ## [0.5.1] — 2026-04-02
 
 ### Fixed
